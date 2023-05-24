@@ -1,0 +1,17 @@
+name: Default workflow
+
+on: [push, pull_request]
+
+jobs:
+  default:
+    runs-on: ubuntu-20.04
+    name: Run eslint, check typescript and run tests
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build
