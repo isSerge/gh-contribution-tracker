@@ -2,18 +2,17 @@ import { fetchUserContributions } from "./api"
 import { formatAsPromptInput } from "./format";
 import { getContributionSummary } from "./langchain";
 
-export async function main() {
-  const startDate = new Date('2023-01-01');
-  const endDate = new Date('2023-12-31');
-  const username = 'isSerge';
+export async function main(username: string, startDateInput?: Date, endDateInput?: Date) {
+  const endDate = endDateInput || new Date();
+  const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
+
   const contributions = await fetchUserContributions('subspace', username, startDate, endDate);
   const formattedContributions = formatAsPromptInput(contributions);
-
-  // console.log({ formattedContributions })
 
   const summary = await getContributionSummary(formattedContributions);
 
   console.log(summary);
 }
 
-main();
+main('isSerge');
+
