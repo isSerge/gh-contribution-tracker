@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   default:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: Run eslint, check typescript and run tests
     steps:
       - uses: actions/checkout@v3
