@@ -1,4 +1,4 @@
-export function formatAsPrompt(contributions: any, username: string): string {
+export function formatAsPromptInput(contributions: any): string {
   const {
     issueContributions,
     pullRequestContributions,
@@ -23,20 +23,20 @@ export function formatAsPrompt(contributions: any, username: string): string {
     prsByRepo[repo].push(node.pullRequest);
   });
 
-  let prompt = `Here are the GitHub activities for ${username} from ${contributions.user.contributionsCollection.startedAt} to ${contributions.user.contributionsCollection.endedAt}:\n\n`;
+  let prompt = '';
 
   for (const repo in issuesByRepo) {
     prompt += `Repository: ${repo}\nIssues:\n`;
-    issuesByRepo[repo].forEach((issue: any, index: number) => {
-      prompt += `${index + 1}. ${issue.title} (Created at: ${issue.createdAt})\n`;
+    issuesByRepo[repo].forEach((issue: any) => {
+      prompt += `${issue.number}. ${issue.title} (${issue.url})\n`;
     });
     prompt += '\n';
   }
 
   for (const repo in prsByRepo) {
     prompt += `Repository: ${repo}\nPull Requests:\n`;
-    prsByRepo[repo].forEach((pr: any, index: number) => {
-      prompt += `${index + 1}. ${pr.title} (Created at: ${pr.createdAt})\n`;
+    prsByRepo[repo].forEach((pr: any) => {
+      prompt += `${pr.number}. ${pr.title} (${pr.url})\n`;
     });
     prompt += '\n';
   }

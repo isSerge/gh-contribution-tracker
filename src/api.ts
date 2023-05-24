@@ -40,7 +40,8 @@ export async function fetchUserContributions(org: string, username: string, star
             nodes {
               issue {
                 title
-                createdAt
+                number
+                url
                 repository {
                   name
                 }
@@ -51,7 +52,8 @@ export async function fetchUserContributions(org: string, username: string, star
             nodes {
               pullRequest {
                 title
-                createdAt
+                number
+                url
                 merged
                 repository {
                   name
