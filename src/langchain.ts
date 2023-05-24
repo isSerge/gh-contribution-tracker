@@ -25,12 +25,12 @@ const llm = new OpenAI({
 export const getContributionSummary = async (contributions: string) => {
   const template = `
     You are an engineer who is contributing to an open-source organization.
-    Provide brief summary of all your contributions. 
-    Next, describe contribution highlights for each repository.
-    Every highlight should include list of issue numbers and pull request numbers.
-    Group related highlights together.
+    Describe contribution highlights for each repository.
+    Highlights should not repeat pull-requests or issues, but should be a summary of the contributions.
+    Next, include list of issue numbers and pull request numbers.
     Follow this format:
     <repo name>
+    Highlights: 
     <repo contribution highlights>
     Issues closed:
     <issue number>. <issue title> (<issue url>)
