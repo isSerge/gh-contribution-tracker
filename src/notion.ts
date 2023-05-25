@@ -3,6 +3,8 @@ import {
   QueryDatabaseResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
+import { ContributionSummary } from "./types";
+
 export type PostResult = Extract<
   QueryDatabaseResponse["results"][number],
   { properties: Record<string, unknown> }
@@ -27,12 +29,136 @@ export async function getNamesAndHandles(notion: Client, databaseId: string) {
 
     const name = (page.properties.name as PropertyValueTitle).title[0].plain_text;
     const handle = (page.properties.handle as PropertyValueRichText).rich_text[0].plain_text;
-    const emoji = (page.properties.emoji as PropertyValueRichText).rich_text[0].plain_text;
-    return [name, handle, emoji];
+    return [name, handle];
   });
 }
 
-export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: string) {
+export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: ContributionSummary) {
+  const summaryItems = summary.flatMap((item) => {
+    return [
+      {
+        "heading_3": {
+          "rich_text": [
+            {
+              "text": {
+                "content": item.repoName,
+              }
+            }
+          ]
+        }
+      },
+      {
+        "paragraph": {
+          "rich_text": [
+            {
+              "text": {
+                "content": item.focusEmojis,
+              }
+            }
+          ]
+        }
+      },
+      {
+        "paragraph": {
+          "rich_text": [
+            {
+              "text": {
+                "content": item.highlights,
+              }
+            }
+          ]
+        }
+      },
+      // adding blank space
+      {
+        "paragraph": {
+          "rich_text": [
+            {
+              "text": {
+                "content": "",
+              }
+            }
+          ]
+        }
+      },
+      {
+        "paragraph": {
+          "rich_text": [
+            {
+              "text": {
+                "content": "Issues closed:",
+              }
+            }
+          ]
+        }
+      },
+      ...item.issuesClosed.map(({ issueNumber, issueTitle, issueUrl }) => {
+        return {
+          "paragraph": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": issueNumber,
+                  "link": {
+                    "url": issueUrl,
+                  }
+                }
+              },
+              {
+                "text": {
+                  "content": ` ${issueTitle}`,
+                }
+              }
+            ]
+          }
+        }
+      }),
+      // adding blank space
+      {
+        "paragraph": {
+          "rich_text": [
+            {
+              "text": {
+                "content": "",
+              }
+            }
+          ]
+        }
+      },
+      {
+        "paragraph": {
+          "rich_text": [
+            {
+              "text": {
+                "content": "PRs merged:",
+              }
+            }
+          ]
+        }
+      },
+      ...item.prsMerged.map(({ prNumber, prTitle, prUrl }) => {
+        return {
+          "paragraph": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": prNumber,
+                  "link": {
+                    "url": prUrl,
+                  }
+                }
+              },
+              {
+                "text": {
+                  "content": ` ${prTitle}`,
+                }
+              }
+            ]
+          }
+        }
+      }),
+    ]
+  });
   try {
     await notion.blocks.children.append({
       block_id: blockId,
@@ -48,17 +174,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
             ]
           }
         },
-        {
-          "paragraph": {
-            "rich_text": [
-              {
-                "text": {
-                  "content": summary,
-                }
-              }
-            ]
-          }
-        }
+        ...summaryItems as any,
       ],
     });
 
