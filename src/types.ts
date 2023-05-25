@@ -15,13 +15,13 @@ export interface ContributionItem {
 }
 
 interface IssueClosed {
-    issueNumber: number;
+    issueNumber: string;
     issueTitle: string;
     issueUrl: string;
 }
 
 interface PrsMerged {
-    prNumber: number;
+    prNumber: string;
     prTitle: string;
     prUrl: string;
 }

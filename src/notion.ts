@@ -46,7 +46,7 @@ const blankSpace = createParagraph("");
 
 export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: ContributionSummary) {
   const summaryItems = summary.flatMap((item) => {
-    return [
+    const itemElements = [
       {
         "heading_3": {
           "rich_text": [
@@ -61,54 +61,67 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
       createParagraph(item.focusEmojis),
       createParagraph(item.highlights),
       blankSpace,
-      createParagraph(`Issues closed (${item.issuesClosed.length}):`),
-      ...item.issuesClosed.map(({ issueNumber, issueTitle, issueUrl }) => {
-        return {
-          "paragraph": {
-            "rich_text": [
-              {
-                "text": {
-                  "content": issueNumber,
-                  "link": {
-                    "url": issueUrl,
+    ];
+  
+    if (item.issuesClosed.length > 0) {
+      itemElements.push(
+        createParagraph(`Issues closed (${item.issuesClosed.length}):`),
+        ...item.issuesClosed.map(({ issueNumber, issueTitle, issueUrl }) => {
+          return {
+            "paragraph": {
+              "rich_text": [
+                {
+                  "text": {
+                    "content": issueNumber,
+                    "link": {
+                      "url": issueUrl,
+                    }
+                  }
+                },
+                {
+                  "text": {
+                    "content": ` ${issueTitle}`,
                   }
                 }
-              },
-              {
-                "text": {
-                  "content": ` ${issueTitle}`,
-                }
-              }
-            ]
+              ]
+            }
           }
-        }
-      }),
-      blankSpace,
-      createParagraph(`PRs merged (${item.prsMerged.length}):`),
-      ...item.prsMerged.map(({ prNumber, prTitle, prUrl }) => {
-        return {
-          "paragraph": {
-            "rich_text": [
-              {
-                "text": {
-                  "content": prNumber,
-                  "link": {
-                    "url": prUrl,
+        }),
+        blankSpace,
+      );
+    }
+  
+    if (item.prsMerged.length > 0) {
+      itemElements.push(
+        createParagraph(`PRs merged (${item.prsMerged.length}):`),
+        ...item.prsMerged.map(({ prNumber, prTitle, prUrl }) => {
+          return {
+            "paragraph": {
+              "rich_text": [
+                {
+                  "text": {
+                    "content": prNumber,
+                    "link": {
+                      "url": prUrl,
+                    }
+                  }
+                },
+                {
+                  "text": {
+                    "content": ` ${prTitle}`,
                   }
                 }
-              },
-              {
-                "text": {
-                  "content": ` ${prTitle}`,
-                }
-              }
-            ]
+              ]
+            }
           }
-        }
-      }),
-      blankSpace,
-    ]
+        }),
+        blankSpace,
+      );
+    }
+
+    return itemElements;
   });
+
   try {
     await notion.blocks.children.append({
       block_id: blockId,
@@ -124,7 +137,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
             ]
           }
         },
-        ...summaryItems as any,
+        ...summaryItems,
       ],
     });
 
