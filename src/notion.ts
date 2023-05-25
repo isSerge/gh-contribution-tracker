@@ -34,17 +34,15 @@ export async function getNamesAndHandles(notion: Client, databaseId: string) {
   });
 }
 
-const blankSpace = {
-  "paragraph": {
-    "rich_text": [
-      {
-        "text": {
-          "content": "",
-        }
-      }
+const createParagraph = (content: string) => ({
+  paragraph: {
+    rich_text: [
+      { text: { content } }
     ]
   }
-}
+});
+
+const blankSpace = createParagraph("");
 
 export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: ContributionSummary) {
   const summaryItems = summary.flatMap((item) => {
@@ -60,40 +58,10 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
           ]
         }
       },
-      {
-        "paragraph": {
-          "rich_text": [
-            {
-              "text": {
-                "content": item.focusEmojis,
-              }
-            }
-          ]
-        }
-      },
-      {
-        "paragraph": {
-          "rich_text": [
-            {
-              "text": {
-                "content": item.highlights,
-              }
-            }
-          ]
-        }
-      },
+      createParagraph(item.focusEmojis),
+      createParagraph(item.highlights),
       blankSpace,
-      {
-        "paragraph": {
-          "rich_text": [
-            {
-              "text": {
-                "content": "Issues closed:",
-              }
-            }
-          ]
-        }
-      },
+      createParagraph(`Issues closed (${item.issuesClosed.length}):`),
       ...item.issuesClosed.map(({ issueNumber, issueTitle, issueUrl }) => {
         return {
           "paragraph": {
@@ -116,17 +84,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
         }
       }),
       blankSpace,
-      {
-        "paragraph": {
-          "rich_text": [
-            {
-              "text": {
-                "content": "PRs merged:",
-              }
-            }
-          ]
-        }
-      },
+      createParagraph(`PRs merged (${item.prsMerged.length}):`),
       ...item.prsMerged.map(({ prNumber, prTitle, prUrl }) => {
         return {
           "paragraph": {
