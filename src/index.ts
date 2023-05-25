@@ -1,4 +1,4 @@
-import { fetchUserContributions } from "./api"
+import { fetchUserContributions } from "./github"
 import { graphql } from '@octokit/graphql';
 import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
