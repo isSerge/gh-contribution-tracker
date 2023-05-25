@@ -25,7 +25,7 @@ export const getContributionSummary = async (llm: OpenAI, contributions: string)
       "prNumber": "string", // The number of the pull request
       "prTitle": "string",  // The title of the pull request
       "prUrl": "string"     // The URL where the pull request is located
-  
+      Make sure JSON is valid!
       Given this actual contribution data: {contributions}
     `;
 
