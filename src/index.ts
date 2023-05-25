@@ -32,7 +32,7 @@ const model = new OpenAI({
 const notionApiKey = process.env.NOTION_API_KEY;
 const databaseId = process.env.NOTION_DATABASE_ID as string;
 const updatesBlockId = process.env.NOTION_UPDATES_BLOCK_ID as string;
-
+const githubOrg = process.env.GITHUB_ORG_NAME as string;
 const notion = new Client({ auth: notionApiKey });
 
 export async function main(
@@ -47,7 +47,7 @@ export async function main(
 
   await Promise.all(tuples.map(async ([name, githubHandle]) => {
     logger.info(`Fetching contributions for ${name} (${githubHandle})`);
-    const contributions = await fetchUserContributions(graphqlClient, 'subspace', githubHandle, startDate, endDate);
+    const contributions = await fetchUserContributions(graphqlClient, githubOrg, githubHandle, startDate, endDate);
     const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
     const summary: ContributionSummary = JSON.parse(rawSummary.text);
     await updateNotionPage(notion, updatesBlockId, name, summary);

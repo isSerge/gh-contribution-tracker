@@ -1,7 +1,7 @@
 {
-  "name": "node-app-template",
+  "name": "gh-contribution-tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "The GitHub Contribution Tracker is a TypeScript application that automates the tracking and summarizing of a user's GitHub contributions to a specific organization, and updates the data on a Notion page",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@notionhq/client": "^2.2.5",
     "@octokit/graphql": "^5.0.6",
