@@ -45,13 +45,13 @@ export async function main(
   // TODO: handle this properly
   if (!isTupleStringArray(tuples)) return;
 
-  tuples.forEach(async ([name, githubHandle]) => {
+  await Promise.all(tuples.map(async ([name, githubHandle]) => {
     logger.info(`Fetching contributions for ${name} (${githubHandle})`);
     const contributions = await fetchUserContributions(graphqlClient, 'subspace', githubHandle, startDate, endDate);
     const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
-    const summary:ContributionSummary = JSON.parse(rawSummary.text);
+    const summary: ContributionSummary = JSON.parse(rawSummary.text);
     await updateNotionPage(notion, updatesBlockId, name, summary);
-  });
+  }));
 
   logger.info('All updates added to Notion!');
 }

@@ -39,7 +39,7 @@ export async function fetchUserContributions(client: typeof graphql, org: string
           }
           pullRequestContributions(first: 100) {
             nodes {
-              pullRequest(merged: true) {
+              pullRequest {
                 title
                 number
                 url
@@ -55,12 +55,30 @@ export async function fetchUserContributions(client: typeof graphql, org: string
     }  
   `;
 
-  const result = await client(query, {
+  const rawResult: any = await client(query, {
     username,
     orgId: organizationId,
     from: startDate.toISOString(),
     to: endDate.toISOString(),
   });
 
+  // Filter merged pull requests
+  const filteredPRContributions = rawResult.user.contributionsCollection.pullRequestContributions.nodes.filter((node: any) => node.pullRequest.merged);
+
+  // Construct new result with filtered pull request contributions
+  const result = {
+    ...rawResult,
+    user: {
+      ...rawResult.user,
+      contributionsCollection: {
+        ...rawResult.user.contributionsCollection,
+        pullRequestContributions: {
+          nodes: filteredPRContributions
+        }
+      }
+    }
+  };
+
   return result;
 }
+
