@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@notionhq/client": "^2.2.5",
     "@octokit/graphql": "^5.0.6",
     "dotenv": "^16.0.3",
     "langchain": "^0.0.81",
