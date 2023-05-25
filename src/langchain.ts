@@ -1,28 +1,8 @@
 import { OpenAI } from "langchain/llms/openai";
 import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from "langchain/chains";
-import { config } from 'dotenv';
 
-config();
-
-const openAIApiKey = process.env.OPENAI_API_KEY;
-
-const llm = new OpenAI({
-  openAIApiKey,
-  temperature: 0.9,
-  modelName: "gpt-3.5-turbo",
-  // modelName: "gpt-4",
-  streaming: true,
-  callbacks: [
-    {
-      handleLLMNewToken(token: string) {
-        process.stdout.write(token);
-      },
-    },
-  ],
-});
-
-export const getContributionSummary = async (contributions: string) => {
+export const getContributionSummary = async (llm: OpenAI, contributions: string) => {
   const template = `
     You are an engineer who is contributing to an open-source organization.
     Describe contribution highlights for each repository.

@@ -1,17 +1,6 @@
 import { graphql } from '@octokit/graphql';
-import { config } from 'dotenv';
 
-config();
-
-const githubToken = process.env.GITHUB_TOKEN;
-
-const graphqlWithAuth = graphql.defaults({
-  headers: {
-    authorization: `token ${githubToken}`,
-  },
-});
-
-async function fetchOrganizationId(org: string) {
+async function fetchOrganizationId(client: typeof graphql, org: string) {
   const query = `
     query ($org: String!) {
       organization(login: $org) {
@@ -20,13 +9,13 @@ async function fetchOrganizationId(org: string) {
     }
   `;
 
-  const result = await graphqlWithAuth(query, { org });
+  const result = await client(query, { org });
 
   return (result as any).organization.id;
 }
 
-export async function fetchUserContributions(org: string, username: string, startDate: Date, endDate: Date) {
-  const organizationId = await fetchOrganizationId(org);
+export async function fetchUserContributions(client: typeof graphql, org: string, username: string, startDate: Date, endDate: Date) {
+  const organizationId = await fetchOrganizationId(client, org);
 
   const query = `
     query ($username: String!, $orgId: ID!, $from: DateTime!, $to: DateTime!) {
@@ -66,7 +55,7 @@ export async function fetchUserContributions(org: string, username: string, star
     }  
   `;
 
-  const result = await graphqlWithAuth(query, {
+  const result = await client(query, {
     username,
     orgId: organizationId,
     from: startDate.toISOString(),
