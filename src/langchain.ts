@@ -10,7 +10,8 @@ export const getContributionSummary = async (llm: OpenAI, contributions: string)
     Next, include list of issue numbers and pull request numbers.
     Follow this format:
     <repo name>
-    Highlights: 
+    Highlights:
+    <five emojis that describe contributions>
     <repo contribution highlights>
     Issues closed:
     <issue number>. <issue title> (<issue url>)

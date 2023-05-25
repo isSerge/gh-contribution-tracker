@@ -4,9 +4,8 @@ import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
 import { Client } from '@notionhq/client';
 
-import { formatAsPromptInput } from "./format";
 import { getContributionSummary } from "./langchain";
-import { Contributions, isTupleStringArray } from './types';
+import { isTupleStringArray } from './types';
 import { getNamesAndHandles, updateNotionPage } from './notion';
 
 config();
@@ -46,11 +45,11 @@ export async function main(
   if (!isTupleStringArray(tuples)) return;
 
   for (const [name, githubHandle, emoji] of tuples) {
-    const contributions = await fetchUserContributions(graphqlClient, 'subspace', githubHandle, startDate, endDate) as Contributions;
-    const formattedContributions = formatAsPromptInput(contributions);
-    const summary = await getContributionSummary(model, formattedContributions);
+    const contributions = await fetchUserContributions(graphqlClient, 'subspace', githubHandle, startDate, endDate);
+    const summary = await getContributionSummary(model, JSON.stringify(contributions));
     const title = `${emoji} ${name}`;
     await updateNotionPage(notion, updatesBlockId, title, summary.text);
+    break;
   }
 }
 
