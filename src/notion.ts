@@ -4,6 +4,7 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { ContributionSummary } from "./types";
+import { logger } from './logger';
 
 export type PostResult = Extract<
   QueryDatabaseResponse["results"][number],
@@ -31,6 +32,18 @@ export async function getNamesAndHandles(notion: Client, databaseId: string) {
     const handle = (page.properties.handle as PropertyValueRichText).rich_text[0].plain_text;
     return [name, handle];
   });
+}
+
+const blankSpace = {
+  "paragraph": {
+    "rich_text": [
+      {
+        "text": {
+          "content": "",
+        }
+      }
+    ]
+  }
 }
 
 export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: ContributionSummary) {
@@ -69,18 +82,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
           ]
         }
       },
-      // adding blank space
-      {
-        "paragraph": {
-          "rich_text": [
-            {
-              "text": {
-                "content": "",
-              }
-            }
-          ]
-        }
-      },
+      blankSpace,
       {
         "paragraph": {
           "rich_text": [
@@ -113,18 +115,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
           }
         }
       }),
-      // adding blank space
-      {
-        "paragraph": {
-          "rich_text": [
-            {
-              "text": {
-                "content": "",
-              }
-            }
-          ]
-        }
-      },
+      blankSpace,
       {
         "paragraph": {
           "rich_text": [
@@ -157,6 +148,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
           }
         }
       }),
+      blankSpace,
     ]
   });
   try {
@@ -178,8 +170,8 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
       ],
     });
 
-    console.log("Page updated successfully");
+    logger.info("Page updated successfully");
   } catch (error) {
-    console.error("Error updating page: ", error);
+    logger.error("Error updating page: ", error);
   }
 }

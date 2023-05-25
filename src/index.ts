@@ -7,6 +7,7 @@ import { Client } from '@notionhq/client';
 import { getContributionSummary } from "./langchain";
 import { isTupleStringArray, ContributionSummary } from './types';
 import { getNamesAndHandles, updateNotionPage } from './notion';
+import { logger } from './logger';
 
 config();
 
@@ -45,12 +46,14 @@ export async function main(
   if (!isTupleStringArray(tuples)) return;
 
   tuples.forEach(async ([name, githubHandle]) => {
-    console.log(`Fetching contributions for ${name} (${githubHandle})`);
+    logger.info(`Fetching contributions for ${name} (${githubHandle})`);
     const contributions = await fetchUserContributions(graphqlClient, 'subspace', githubHandle, startDate, endDate);
     const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
     const summary:ContributionSummary = JSON.parse(rawSummary.text);
     await updateNotionPage(notion, updatesBlockId, name, summary);
   });
+
+  logger.info('All updates added to Notion!');
 }
 
 main();
