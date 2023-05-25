@@ -52,6 +52,11 @@ export async function main(
     await Promise.all(tuples.map(async ([name, githubHandle]) => {
       logger.info(`Fetching contributions for ${name} (${githubHandle})`);
       const contributions = await fetchUserContributions(graphqlClient, githubOrg, githubHandle, startDate, endDate);
+
+      if (!contributions) {
+        throw new Error('Invalid contributions');
+      }
+
       const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
 
       if (!rawSummary) {

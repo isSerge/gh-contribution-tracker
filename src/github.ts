@@ -1,8 +1,9 @@
 import { graphql } from '@octokit/graphql';
 
 import { handleException } from './error';
+import { isGraphQLResponse, GraphQLResponse } from './types';
 
-async function fetchOrganizationId(client: typeof graphql, org: string) {
+async function fetchOrganizationId(client: typeof graphql, org: string): Promise<string> {
   const query = `
     query ($org: String!) {
       organization(login: $org) {
@@ -15,8 +16,7 @@ async function fetchOrganizationId(client: typeof graphql, org: string) {
 
   return (result as any).organization.id;
 }
-
-export async function fetchUserContributions(client: typeof graphql, org: string, username: string, startDate: Date, endDate: Date) {
+export async function fetchUserContributions(client: typeof graphql, org: string, username: string, startDate: Date, endDate: Date): Promise<GraphQLResponse | null> {
   try {
     const organizationId = await fetchOrganizationId(client, org);
 
@@ -65,16 +65,23 @@ export async function fetchUserContributions(client: typeof graphql, org: string
       to: endDate.toISOString(),
     });
 
+    if (!isGraphQLResponse(rawResult)) {
+      throw new Error("Response from GitHub does not match expected structure");
+    }
+
+    // rawResult is now guaranteed to be a GraphQLResponse, so it can be casted.
+    const validatedResult: GraphQLResponse = rawResult;
+
     // Filter merged pull requests
-    const filteredPRContributions = rawResult.user.contributionsCollection.pullRequestContributions.nodes.filter((node: any) => node.pullRequest.merged);
+    const filteredPRContributions = rawResult.user.contributionsCollection.pullRequestContributions.nodes.filter((node) => node.pullRequest.merged);
 
     // Construct new result with filtered pull request contributions
     const result = {
-      ...rawResult,
+      ...validatedResult,
       user: {
-        ...rawResult.user,
+        ...validatedResult.user,
         contributionsCollection: {
-          ...rawResult.user.contributionsCollection,
+          ...validatedResult.user.contributionsCollection,
           pullRequestContributions: {
             nodes: filteredPRContributions
           }
@@ -85,6 +92,6 @@ export async function fetchUserContributions(client: typeof graphql, org: string
     return result;
   } catch (error) {
     handleException(error, 'fetchUserContributions');
+    return null;
   }
 }
-
