@@ -5,6 +5,7 @@ import {
 
 import { ContributionSummary } from "./types";
 import { logger } from './logger';
+import { handleException } from './error';
 
 export type PostResult = Extract<
   QueryDatabaseResponse["results"][number],
@@ -21,17 +22,22 @@ type PropertyValueTitle = ExtractedPropertyValue<"title">;
 type PropertyValueRichText = ExtractedPropertyValue<"rich_text">;
 
 export async function getNamesAndHandles(notion: Client, databaseId: string) {
-  const response = await notion.databases.query({
-    database_id: databaseId,
-  });
+  try {
+    const response = await notion.databases.query({
+      database_id: databaseId,
+    });
 
-  return response.results.map((page) => {
-    if (!isFullPage(page)) return;
+    return response.results.map((page) => {
+      if (!isFullPage(page)) return;
 
-    const name = (page.properties.name as PropertyValueTitle).title[0].plain_text;
-    const handle = (page.properties.handle as PropertyValueRichText).rich_text[0].plain_text;
-    return [name, handle];
-  });
+      const name = (page.properties.name as PropertyValueTitle).title[0].plain_text;
+      const handle = (page.properties.handle as PropertyValueRichText).rich_text[0].plain_text;
+      return [name, handle];
+    });
+  } catch (error) {
+    handleException(error, 'getNamesAndHandles');
+    return [];
+  }
 }
 
 const createParagraph = (content: string) => ({
@@ -62,7 +68,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
       createParagraph(item.highlights),
       blankSpace,
     ];
-  
+
     if (item.issuesClosed.length > 0) {
       itemElements.push(
         createParagraph(`Issues closed (${item.issuesClosed.length}):`),
@@ -90,7 +96,7 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
         blankSpace,
       );
     }
-  
+
     if (item.prsMerged.length > 0) {
       itemElements.push(
         createParagraph(`PRs merged (${item.prsMerged.length}):`),
@@ -141,8 +147,8 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
       ],
     });
 
-    logger.info("Page updated successfully");
+    logger.info("Notion page updated successfully");
   } catch (error) {
-    logger.error("Error updating page: ", error);
+    handleException(error, 'updateNotionPage');
   }
 }

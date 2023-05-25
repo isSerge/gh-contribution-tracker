@@ -8,6 +8,7 @@ import { getContributionSummary } from "./langchain";
 import { isTupleStringArray, ContributionSummary } from './types';
 import { getNamesAndHandles, updateNotionPage } from './notion';
 import { logger } from './logger';
+import { handleException } from './error';
 
 config();
 
@@ -40,20 +41,31 @@ export async function main(
 ) {
   const endDate = endDateInput || new Date();
   const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
-  const tuples = await getNamesAndHandles(notion, databaseId);
 
-  // TODO: handle this properly
-  if (!isTupleStringArray(tuples)) return;
+  try {
+    const tuples = await getNamesAndHandles(notion, databaseId);
 
-  await Promise.all(tuples.map(async ([name, githubHandle]) => {
-    logger.info(`Fetching contributions for ${name} (${githubHandle})`);
-    const contributions = await fetchUserContributions(graphqlClient, githubOrg, githubHandle, startDate, endDate);
-    const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
-    const summary: ContributionSummary = JSON.parse(rawSummary.text);
-    await updateNotionPage(notion, updatesBlockId, name, summary);
-  }));
+    if (!isTupleStringArray(tuples)) {
+      throw new Error('Invalid name and handles tuple array');
+    }
 
-  logger.info('All updates added to Notion!');
+    await Promise.all(tuples.map(async ([name, githubHandle]) => {
+      logger.info(`Fetching contributions for ${name} (${githubHandle})`);
+      const contributions = await fetchUserContributions(graphqlClient, githubOrg, githubHandle, startDate, endDate);
+      const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
+
+      if (!rawSummary) {
+        throw new Error('Invalid contribution summary');
+      }
+
+      const summary: ContributionSummary = JSON.parse(rawSummary.text);
+      await updateNotionPage(notion, updatesBlockId, name, summary);
+    }));
+
+    logger.info('All updates added to Notion!');
+  } catch (error) {
+    handleException(error, 'main');
+  }
 }
 
 main();
