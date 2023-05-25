@@ -39,7 +39,7 @@ export async function fetchUserContributions(client: typeof graphql, org: string
           }
           pullRequestContributions(first: 100) {
             nodes {
-              pullRequest {
+              pullRequest(merged: true) {
                 title
                 number
                 url
