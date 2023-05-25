@@ -45,12 +45,12 @@ export async function main(
   // TODO: handle this properly
   if (!isTupleStringArray(tuples)) return;
 
-  for (const [name, githubHandle] of tuples) {
+  for (const [name, githubHandle, emoji] of tuples) {
     const contributions = await fetchUserContributions(graphqlClient, 'subspace', githubHandle, startDate, endDate) as Contributions;
     const formattedContributions = formatAsPromptInput(contributions);
     const summary = await getContributionSummary(model, formattedContributions);
-
-    await updateNotionPage(notion, updatesBlockId, name, summary.text);
+    const title = `${emoji} ${name}`;
+    await updateNotionPage(notion, updatesBlockId, title, summary.text);
   }
 }
 

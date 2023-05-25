@@ -27,8 +27,8 @@ export async function getNamesAndHandles(notion: Client, databaseId: string) {
 
     const name = (page.properties.name as PropertyValueTitle).title[0].plain_text;
     const handle = (page.properties.handle as PropertyValueRichText).rich_text[0].plain_text;
-
-    return [name, handle];
+    const emoji = (page.properties.emoji as PropertyValueRichText).rich_text[0].plain_text;
+    return [name, handle, emoji];
   });
 }
 
