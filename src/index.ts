@@ -7,7 +7,7 @@ import { Client } from '@notionhq/client';
 import { formatAsPromptInput } from "./format";
 import { getContributionSummary } from "./langchain";
 import { Contributions, isTupleStringArray } from './types';
-import { getNamesAndHandles } from './notion';
+import { getNamesAndHandles, updateNotionPage } from './notion';
 
 config();
 
@@ -27,18 +27,11 @@ const model = new OpenAI({
   temperature: 0.9,
   modelName: "gpt-3.5-turbo",
   // modelName: "gpt-4",
-  streaming: true,
-  callbacks: [
-    {
-      handleLLMNewToken(token: string) {
-        process.stdout.write(token);
-      },
-    },
-  ],
 });
 
 const notionApiKey = process.env.NOTION_API_KEY;
 const databaseId = process.env.NOTION_DATABASE_ID as string;
+const updatesBlockId = process.env.NOTION_UPDATES_BLOCK_ID as string;
 
 const notion = new Client({ auth: notionApiKey });
 
@@ -57,7 +50,7 @@ export async function main(
     const formattedContributions = formatAsPromptInput(contributions);
     const summary = await getContributionSummary(model, formattedContributions);
 
-    // TODO: Add a notion page for the user and add the summary to it.
+    await updateNotionPage(notion, updatesBlockId, name, summary.text);
   }
 }
 

@@ -31,3 +31,39 @@ export async function getNamesAndHandles(notion: Client, databaseId: string) {
     return [name, handle];
   });
 }
+
+export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: string) {
+  try {
+    await notion.blocks.children.append({
+      block_id: blockId,
+      children: [
+        {
+          "heading_2": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": name
+                }
+              }
+            ]
+          }
+        },
+        {
+          "paragraph": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": summary,
+                }
+              }
+            ]
+          }
+        }
+      ],
+    });
+
+    console.log("Page updated successfully");
+  } catch (error) {
+    console.error("Error updating page: ", error);
+  }
+}
