@@ -1,7 +1,7 @@
 import { graphql } from '@octokit/graphql';
 import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
-import { Client } from '@notionhq/client';
+import { Client, isFullPage } from '@notionhq/client';
 
 import { fetchUserContributions, fetchOrganizationId } from "./github"
 import { getContributionSummary } from "./langchain";
@@ -43,7 +43,7 @@ export async function main(
   const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
 
   try {
-    const tuples = await getNamesAndHandles(notion, databaseId);
+    const tuples = await getNamesAndHandles(notion, isFullPage, databaseId);
 
     if (!isTupleStringArray(tuples)) {
       throw new Error('Invalid name and handles tuple array');
