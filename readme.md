@@ -15,12 +15,13 @@ The project consists of several TypeScript files, each serving a different purpo
 
 ## Main Features
 
+<img width="438" alt="image" src="https://github.com/isSerge/gh-contribution-tracker/assets/13568875/1f2330fc-fd2d-462a-9981-5fb2c94cd68b">
+
 The main features of the app are:
 
 - Fetching GitHub user contributions data via the GitHub GraphQL API.
 - Summarizing the contribution data into a concise and readable format using an AI model from Langchain.
 - Updating a Notion page with the summarized contribution data.
-- Error handling and logging of application events for easy debugging and monitoring.
 
 ## Setup and Usage
 
