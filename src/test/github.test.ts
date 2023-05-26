@@ -113,3 +113,21 @@ it('fetchUserContributions handles exceptions', async function () {
   const result = await fetchUserContributions(client, orgId, username, startDate, endDate);
   assert.strictEqual(result, null);
 });
+
+it('fetchUserContributions returns null in case of unexpected response', async function () {
+  const unexpectedResponse: any = {
+    unexpectedField: {
+      contributionsCollection: {
+        startedAt: startDate.toISOString(),
+        endedAt: endDate.toISOString(),
+        hasAnyContributions: true,
+        hasActivityInThePast: true,
+      }
+    }
+  };
+
+  const client = (async () => Promise.resolve(unexpectedResponse)) as unknown as typeof graphql;
+  const result = await fetchUserContributions(client, orgId, username, startDate, endDate);
+  
+  assert.strictEqual(result, null);
+});
