@@ -26,18 +26,20 @@ interface PrsMerged {
     prUrl: string;
 }
 
-
-interface Issue {
+interface Base {
     title: string;
     number: number;
     url: string;
-    state: string;
     repository: {
         name: string;
     };
 }
 
-interface PullRequest extends Issue {
+interface Issue extends Base {
+    state: 'OPEN' | 'CLOSED';
+}
+
+interface PullRequest extends Base {
     merged: boolean;
 }
 
@@ -72,9 +74,9 @@ export interface GraphQLResponse {
 
 export function isGraphQLResponse(obj: any): obj is GraphQLResponse {
     // Add checks for required fields
-    return obj 
-    && obj.user 
-    && obj.user.contributionsCollection
-    && obj.user.contributionsCollection.issueContributions.nodes.every((node: any) => 'issue' in node && 'state' in node.issue)
-    && obj.user.contributionsCollection.pullRequestContributions.nodes.every((node: any) => 'pullRequest' in node);
+    return obj
+        && obj.user
+        && obj.user.contributionsCollection
+        && obj.user.contributionsCollection.issueContributions.nodes.every((node: any) => 'issue' in node && 'state' in node.issue)
+        && obj.user.contributionsCollection.pullRequestContributions.nodes.every((node: any) => 'pullRequest' in node);
 }
