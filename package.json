@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "build": "rm -rf dist && tsc",
     "lint": "eslint . --ext .ts",
-    "test": "node --loader tsx --test src/test/*.ts"
+    "test": "tsc --noEmit && node --loader tsx --test src/test/*.ts"
   },
   "keywords": [],
   "author": "",
