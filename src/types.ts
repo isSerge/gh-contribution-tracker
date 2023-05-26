@@ -31,6 +31,7 @@ interface Issue {
     title: string;
     number: number;
     url: string;
+    state: string;
     repository: {
         name: string;
     };
@@ -71,5 +72,9 @@ export interface GraphQLResponse {
 
 export function isGraphQLResponse(obj: any): obj is GraphQLResponse {
     // Add checks for required fields
-    return obj && obj.user && obj.user.contributionsCollection;
+    return obj 
+    && obj.user 
+    && obj.user.contributionsCollection
+    && obj.user.contributionsCollection.issueContributions.nodes.every((node: any) => 'issue' in node && 'state' in node.issue)
+    && obj.user.contributionsCollection.pullRequestContributions.nodes.every((node: any) => 'pullRequest' in node);
 }

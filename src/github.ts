@@ -3,7 +3,7 @@ import { graphql } from '@octokit/graphql';
 import { handleException } from './error';
 import { isGraphQLResponse, GraphQLResponse } from './types';
 
-async function fetchOrganizationId(client: typeof graphql, org: string): Promise<string> {
+export async function fetchOrganizationId(client: typeof graphql, org: string): Promise<string> {
   const query = `
     query ($org: String!) {
       organization(login: $org) {
@@ -16,10 +16,9 @@ async function fetchOrganizationId(client: typeof graphql, org: string): Promise
 
   return (result as any).organization.id;
 }
-export async function fetchUserContributions(client: typeof graphql, org: string, username: string, startDate: Date, endDate: Date): Promise<GraphQLResponse | null> {
-  try {
-    const organizationId = await fetchOrganizationId(client, org);
 
+export async function fetchUserContributions(client: typeof graphql, organizationId: string, username: string, startDate: Date, endDate: Date): Promise<GraphQLResponse | null> {
+  try {
     const query = `
       query ($username: String!, $orgId: ID!, $from: DateTime!, $to: DateTime!) {
         user(login: $username) {
@@ -34,6 +33,7 @@ export async function fetchUserContributions(client: typeof graphql, org: string
                   title
                   number
                   url
+                  state
                   repository {
                     name
                   }
@@ -69,19 +69,22 @@ export async function fetchUserContributions(client: typeof graphql, org: string
       throw new Error("Response from GitHub does not match expected structure");
     }
 
-    // rawResult is now guaranteed to be a GraphQLResponse, so it can be casted.
     const validatedResult: GraphQLResponse = rawResult;
 
-    // Filter merged pull requests
-    const filteredPRContributions = rawResult.user.contributionsCollection.pullRequestContributions.nodes.filter((node) => node.pullRequest.merged);
+    // Filter closed issues and merged pull requests
+    const filteredIssueContributions = validatedResult.user.contributionsCollection.issueContributions.nodes.filter((node) => node.issue.state === 'CLOSED');
+    const filteredPRContributions = validatedResult.user.contributionsCollection.pullRequestContributions.nodes.filter((node) => node.pullRequest.merged);
 
-    // Construct new result with filtered pull request contributions
+    // Construct new result with filtered issue and pull request contributions
     const result = {
       ...validatedResult,
       user: {
         ...validatedResult.user,
         contributionsCollection: {
           ...validatedResult.user.contributionsCollection,
+          issueContributions: {
+            nodes: filteredIssueContributions
+          },
           pullRequestContributions: {
             nodes: filteredPRContributions
           }

@@ -1,9 +1,9 @@
-import { fetchUserContributions } from "./github"
 import { graphql } from '@octokit/graphql';
 import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
 import { Client } from '@notionhq/client';
 
+import { fetchUserContributions, fetchOrganizationId } from "./github"
 import { getContributionSummary } from "./langchain";
 import { isTupleStringArray, ContributionSummary } from './types';
 import { getNamesAndHandles, updateNotionPage } from './notion';
@@ -51,7 +51,8 @@ export async function main(
 
     await Promise.all(tuples.map(async ([name, githubHandle]) => {
       logger.info(`Fetching contributions for ${name} (${githubHandle})`);
-      const contributions = await fetchUserContributions(graphqlClient, githubOrg, githubHandle, startDate, endDate);
+      const orgId = await fetchOrganizationId(graphqlClient, githubOrg);
+      const contributions = await fetchUserContributions(graphqlClient, orgId, githubHandle, startDate, endDate);
 
       if (!contributions) {
         throw new Error('Invalid contributions');
