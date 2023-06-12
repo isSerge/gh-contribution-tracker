@@ -6,7 +6,7 @@ import { Client, isFullPage } from '@notionhq/client';
 import { fetchUserContributions, fetchOrganizationId } from "./github"
 import { getContributionSummary } from "./langchain";
 import { isTupleStringArray, ContributionSummary } from './types';
-import { getNamesAndHandles, updateNotionPage } from './notion';
+import { getNamesAndHandles, updateDevSummary, addDate } from './notion';
 import { logger } from './logger';
 import { handleException } from './error';
 
@@ -49,6 +49,8 @@ export async function main(
       throw new Error('Invalid name and handles tuple array');
     }
 
+    await addDate(notion, updatesBlockId, endDate.toISOString().split('T')[0]);
+
     await Promise.all(tuples.map(async ([name, githubHandle]) => {
       logger.info(`Fetching contributions for ${name} (${githubHandle})`);
       const orgId = await fetchOrganizationId(graphqlClient, githubOrg);
@@ -58,6 +60,14 @@ export async function main(
         throw new Error('Invalid contributions');
       }
 
+      // skip person if no contributions for a given time period
+      const { issueContributions, pullRequestContributions } = contributions.user.contributionsCollection;  
+
+      if (issueContributions.nodes.length === 0 && pullRequestContributions.nodes.length === 0) {
+        logger.info(`No contributions for ${name} (${githubHandle})`);
+        return;
+      }
+
       const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
 
       if (!rawSummary) {
@@ -65,7 +75,7 @@ export async function main(
       }
 
       const summary: ContributionSummary = JSON.parse(rawSummary.text);
-      await updateNotionPage(notion, updatesBlockId, name, summary);
+      await updateDevSummary(notion, updatesBlockId, name, summary);
     }));
 
     logger.info('All updates added to Notion!');

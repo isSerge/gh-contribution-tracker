@@ -4,7 +4,7 @@ import { Client } from '@notionhq/client';
 
 import {
   getNamesAndHandles,
-  updateNotionPage
+  updateDevSummary,
 } from '../notion';
 import { logger } from '../logger';
 import { ContributionSummary } from '../types';
@@ -51,10 +51,10 @@ it('getNamesAndHandles returns names and handles', async function () {
   assert.deepStrictEqual(result, [['name1', 'handle1'], ['name2', 'handle2']]);
 });
 
-it('updateNotionPage updates a Notion page', async function () {
+it('updateDevSummary updates a Notion page', async function () {
   const summary: ContributionSummary = [];
-  await updateNotionPage(client, blockId, name, summary);
-  assert.doesNotReject(updateNotionPage(client, blockId, name, summary));
+  await updateDevSummary(client, blockId, name, summary);
+  assert.doesNotReject(updateDevSummary(client, blockId, name, summary));
 });
 
 

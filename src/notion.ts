@@ -135,7 +135,7 @@ const convertSummaryToNotionBlocks = (summary: ContributionSummary) => {
 }
 
 
-export async function updateNotionPage(notion: Client, blockId: string, name: string, summary: ContributionSummary) {
+export async function updateDevSummary(notion: Client, blockId: string, name: string, summary: ContributionSummary) {
   const summaryItems = convertSummaryToNotionBlocks(summary);
   const newBlock = {
     block_id: blockId,
@@ -160,6 +160,33 @@ export async function updateNotionPage(notion: Client, blockId: string, name: st
 
     logger.info("Notion page updated successfully");
   } catch (error) {
-    handleException(error, 'updateNotionPage');
+    handleException(error, 'updateDevSummary');
+  }
+}
+
+export async function addDate(notion: Client, blockId: string, date: string) {
+  const newBlock = {
+    block_id: blockId,
+    children: [
+      {
+        "heading_2": {
+          "rich_text": [
+            {
+              "text": {
+                "content": date
+              }
+            }
+          ]
+        }
+      },
+    ],
+  }
+
+  try {
+    await notion.blocks.children.append(newBlock);
+
+    logger.info("Summary update date added");
+  } catch (error) {
+    handleException(error, 'updateDevSummary');
   }
 }
