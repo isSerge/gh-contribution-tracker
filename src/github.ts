@@ -9,9 +9,11 @@ interface RepositoryNode {
   updatedAt: string;
 }
 
-interface IssueCounts {
+interface IssuesData {
   open: number;
   closed: number;
+  avgTimeToClose: number;
+  avgCommentsPerIssue: number;
 }
 
 interface OrganizationActivity {
@@ -19,7 +21,7 @@ interface OrganizationActivity {
   forks: number;
   repoCount: number;
   recentUpdatedRepos: RepositoryNode[];
-  issues: IssueCounts;
+  issues: IssuesData;
   pullRequests: PullRequestData;
 }
 
@@ -57,7 +59,7 @@ export async function fetchOrganizationActivity(octokit: Octokit, org: string, s
 }
 
 export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, repo: string, since: Date
-): Promise<IssueCounts> {
+): Promise<IssuesData> {
   const issuesOpen = await octokit.issues.listForRepo({
     owner: org,
     repo,
@@ -75,7 +77,55 @@ export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, rep
   return {
     open: issuesOpen.data.length,
     closed: issuesClosed.data.length,
+    avgTimeToClose: calculateAverageTimeToClose(issuesClosed.data),
+    avgCommentsPerIssue: getAverageCommentsPerIssue(issuesClosed.data),
   };
+}
+
+function getAverageCommentsPerIssue(issues: Issue[]) {
+  let totalComments = 0;
+  let issuesWithComments = 0; // Track the number of issues with comments
+
+  for (const { comments } of issues) {
+
+    // Add the number of comments to the total
+    totalComments += comments;
+
+    // Check if there are comments for this issue
+    if (comments > 0) {
+      issuesWithComments++;
+    }
+  }
+
+  // Calculate the average comments per issue
+  const averageComments = issuesWithComments === 0 ? 0 : totalComments / issuesWithComments;
+
+  return averageComments;
+}
+
+interface Issue {
+  created_at: string;
+  closed_at: string | null;
+  number: number;
+  repository_url: string;
+  comments: number;
+}
+
+function calculateAverageTimeToClose(issues: Issue[]): number {
+  const closedIssues = issues.filter((issue) => issue.closed_at !== null);
+
+  if (closedIssues.length === 0) {
+    return 0;
+  }
+
+  const totalCloseTime = closedIssues.reduce((acc, issue) => {
+    const createdAt = new Date(issue.created_at);
+    const closedAt = new Date(issue.closed_at as string);
+    const diff = closedAt.getTime() - createdAt.getTime();
+    return acc + diff;
+  }, 0);
+
+  return totalCloseTime / closedIssues.length;
 }
 
 
@@ -89,6 +139,8 @@ async function aggregateData(octokit: Octokit, githubOrg: string, repos: Reposit
   let mergedPRs = 0;
   let avgTimeToMerge = 0;
   let avgCommentsPerMergedPR = 0;
+  let avgTimeToClose = 0;
+  let avgCommentsPerIssue = 0;
 
   for (const repo of repos) {
     stars += repo.stargazerCount;
@@ -106,6 +158,8 @@ async function aggregateData(octokit: Octokit, githubOrg: string, repos: Reposit
       mergedPRs += prData.merged;
       avgTimeToMerge += prData.avgTimeToMerge;
       avgCommentsPerMergedPR += prData.avgCommentsPerMergedPR;
+      avgTimeToClose += issueCounts.avgTimeToClose;
+      avgCommentsPerIssue += issueCounts.avgCommentsPerIssue;
     }
   }
 
@@ -117,6 +171,8 @@ async function aggregateData(octokit: Octokit, githubOrg: string, repos: Reposit
     issues: {
       open: openIssues,
       closed: closedIssues,
+      avgTimeToClose: avgTimeToClose / recentUpdatedRepos.length,
+      avgCommentsPerIssue: avgCommentsPerIssue / recentUpdatedRepos.length,
     },
     pullRequests: {
       open: openPRs,
