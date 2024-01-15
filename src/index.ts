@@ -1,12 +1,10 @@
 import { graphql } from '@octokit/graphql';
 // import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
-// import { Client, isFullPage } from '@notionhq/client';
 
 import { fetchOrganization } from "./github"
 // import { getContributionSummary } from "./langchain";
 // import { isTupleStringArray, ContributionSummary } from './types';
-// import { getNamesAndHandles, updateDevSummary, addDate } from './notion';
 // import { logger } from './logger';
 import { handleException } from './error';
 
@@ -30,11 +28,7 @@ const graphqlClient = graphql.defaults({
 //   // modelName: "gpt-4",
 // });
 
-// const notionApiKey = process.env.NOTION_API_KEY;
-// const databaseId = process.env.NOTION_DATABASE_ID as string;
-// const updatesBlockId = process.env.NOTION_UPDATES_BLOCK_ID as string;
 const githubOrg = process.env.GITHUB_ORG_NAME as string;
-// const notion = new Client({ auth: notionApiKey });
 
 export async function main(
   // startDateInput?: Date, endDateInput?: Date
@@ -43,51 +37,10 @@ export async function main(
   // const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
 
   try {
-    // const tuples = await getNamesAndHandles(notion, isFullPage, databaseId);
-
-    // if (!isTupleStringArray(tuples)) {
-    //   throw new Error('Invalid name and handles tuple array');
-    // }
-
-    // await addDate(notion, updatesBlockId, endDate.toISOString().split('T')[0]);
-
     const data = await fetchOrganization(graphqlClient, githubOrg);
 
     console.log(data);
 
-    // await Promise.all(tuples.map(async (githubHandle) => {
-    //   logger.info(`Fetching contributions for ${githubHandle}`);
-    //   const orgId = await fetchOrganizationId(graphqlClient, githubOrg);
-    //   const contributions = await fetchUserContributions(graphqlClient, orgId, githubHandle, startDate, endDate);
-
-    //   if (!contributions) {
-    //     throw new Error('Invalid contributions');
-    //   }
-
-    //   // skip person if no contributions for a given time period
-    //   const { issueContributions, pullRequestContributions } = contributions.user.contributionsCollection;
-
-    //   if (issueContributions.nodes.length === 0 && pullRequestContributions.nodes.length === 0) {
-    //     logger.info(`No contributions for ${githubHandle}`);
-    //     return;
-    //   }
-
-    //   const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
-
-    //   if (!rawSummary) {
-    //     throw new Error('Invalid contribution summary');
-    //   }
-
-    //   const summary: ContributionSummary = JSON.parse(rawSummary.text);
-
-    //   console.log(
-    //     `Summary for ${name} (${githubHandle}):\n`,
-    //     JSON.stringify(summary, null, 2)
-    //   );
-    //   // await updateDevSummary(notion, updatesBlockId, name, summary);
-    // }));
-
-    // logger.info('All updates added to Notion!');
   } catch (error) {
     handleException(error, 'main');
   }
