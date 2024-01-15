@@ -69,26 +69,26 @@ export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, rep
 
 
 export async function aggregateData(octokit: Octokit, githubOrg: string, repos: RepositoryNode[], since: Date) {
-  let totalStars = 0;
-  let totalForks = 0;
+  let stars = 0;
+  let forks = 0;
   const recentUpdatedRepos: RepositoryNode[] = [];
-  let totalNewIssues = 0;
-  let totalClosedIssues = 0;
+  let newIssues = 0;
+  let closedIssues = 0;
 
   for (const repo of repos) {
-    totalStars += repo.stargazerCount;
-    totalForks += repo.forkCount;
+    stars += repo.stargazerCount;
+    forks += repo.forkCount;
 
     if (new Date(repo.updatedAt) > since) {
       recentUpdatedRepos.push(repo);
 
-      const { newIssues, closedIssues } = await fetchIssueCountsForRepo(octokit, githubOrg, repo.name, since);
+      const issueCounts = await fetchIssueCountsForRepo(octokit, githubOrg, repo.name, since);
 
-      totalNewIssues += newIssues;
-      totalClosedIssues += closedIssues;
+      newIssues += issueCounts.newIssues;
+      closedIssues += issueCounts.closedIssues;
     }
   }
 
-  return { totalStars, totalForks, totalCount: repos.length, recentUpdatedRepos, totalNewIssues, totalClosedIssues };
+  return { stars, forks, repoCount: repos.length, recentUpdatedRepos, newIssues, closedIssues };
 }
 
