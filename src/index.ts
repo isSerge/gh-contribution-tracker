@@ -1,4 +1,4 @@
-import { graphql } from '@octokit/graphql';
+import { Octokit } from '@octokit/rest';
 // import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
 // import * as fsp from 'fs/promises';
@@ -12,11 +12,7 @@ config();
 
 const githubToken = process.env.GITHUB_TOKEN;
 
-const graphqlClient = graphql.defaults({
-  headers: {
-    authorization: `token ${githubToken}`,
-  },
-});
+const octokit = new Octokit({ auth: githubToken });
 
 
 // const openAIApiKey = process.env.OPENAI_API_KEY;
@@ -33,12 +29,14 @@ const githubOrg = process.env.GITHUB_ORG_NAME as string;
 export async function main() {
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
   try {
-    const data = await fetchOrganizationRepos(graphqlClient, githubOrg);
+    const data = await fetchOrganizationRepos(octokit, githubOrg);
     const aggregated = aggregateData(data, oneWeekAgo);
 
     console.log(aggregated);
-    // await fsp.writeFile('data.json', JSON.stringify(data, null, 2));
+
+    // await fsp.writeFile('data.json', JSON.stringify(aggregated, null, 2));
 
   } catch (error) {
     handleException(error, 'main');

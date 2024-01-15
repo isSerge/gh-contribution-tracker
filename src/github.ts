@@ -1,4 +1,4 @@
-import { graphql } from '@octokit/graphql';
+import { Octokit } from '@octokit/rest';
 
 interface RepositoryNode {
   name: string;
@@ -9,65 +9,37 @@ interface RepositoryNode {
   updatedAt: string;
 }
 
-interface RepositoryEdge {
-  node: RepositoryNode;
-  cursor: string;
-}
-
-interface RepositoryPageInfo {
-  hasNextPage: boolean;
-  endCursor: string;
-}
-
-interface OrganizationRepositories {
-  edges: RepositoryEdge[];
-  pageInfo: RepositoryPageInfo;
-}
-
-interface OrganizationData {
-  organization: {
-    repositories: OrganizationRepositories;
-  };
-}
-
-export async function fetchOrganizationRepos(client: typeof graphql, org: string): Promise<RepositoryNode[]> {
+export async function fetchOrganizationRepos(octokit: Octokit, org: string): Promise<RepositoryNode[]> {
+  const allRepos: RepositoryNode[] = [];
+  let page = 1;
   let hasNextPage = true;
-  let cursor: string | null = null;
-  const allRepos = [];
-
-  const query = `
-    query ($org: String!, $cursor: String) {
-      organization(login: $org) {
-        repositories(first: 10, after: $cursor) {
-          edges {
-            node {
-              name
-              description
-              url
-              stargazerCount
-              forkCount
-              updatedAt
-            }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
-        }
-      }
-    }  
-  `;
 
   while (hasNextPage) {
-    const result: OrganizationData = await client(query, { org, cursor });
-    allRepos.push(...result.organization.repositories.edges.map(edge => edge.node));
-    hasNextPage = result.organization.repositories.pageInfo.hasNextPage;
-    cursor = result.organization.repositories.pageInfo.endCursor;
+    const response = await octokit.repos.listForOrg({
+      org,
+      type: 'public',
+      per_page: 100,
+      page,
+    });
+
+    response.data.forEach(repo => {
+      allRepos.push({
+        name: repo.name,
+        description: repo.description || '',
+        url: repo.html_url,
+        stargazerCount: repo.stargazers_count || 0,
+        forkCount: repo.forks_count || 0,
+        updatedAt: repo.updated_at || '',
+      });
+    });
+
+    hasNextPage = response.data.length === 100;
+    page++;
   }
 
   return allRepos;
 }
+
 
 export function aggregateData(repos: RepositoryNode[], since: Date) {
   let totalStars = 0;
