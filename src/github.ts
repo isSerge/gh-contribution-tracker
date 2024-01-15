@@ -76,6 +76,8 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
   let closedIssues = 0;
   let newPRs = 0;
   let mergedPRs = 0;
+  let avgTimeToMerge = 0;
+  let avgCommentsPerMergedPR = 0;
 
   for (const repo of repos) {
     stars += repo.stargazerCount;
@@ -85,12 +87,14 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
       recentUpdatedRepos.push(repo);
 
       const issueCounts = await fetchIssueCountsForRepo(octokit, githubOrg, repo.name, since);
-      const prCounts = await fetchPullRequestCountsForRepo(octokit, githubOrg, repo.name, since);
+      const prData = await fetchPullRequestForRepo(octokit, githubOrg, repo.name, since);
 
       openIssues += issueCounts.openIssues;
       closedIssues += issueCounts.closedIssues;
-      newPRs += prCounts.openPullRequests;
-      mergedPRs += prCounts.mergedPullRequests;
+      newPRs += prData.open;
+      mergedPRs += prData.merged;
+      avgTimeToMerge += prData.avgTimeToMerge;
+      avgCommentsPerMergedPR += prData.avgCommentsPerMergedPR;
     }
   }
 
@@ -99,24 +103,32 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
     forks,
     repoCount: repos.length,
     recentUpdatedRepos,
-    openIssues,
-    closedIssues,
-    newPRs,
-    mergedPRs,
+    issues: {
+      open: openIssues,
+      closed: closedIssues,
+    },
+    pullRequests: {
+      new: newPRs,
+      merged: mergedPRs,
+      avgTimeToMerge: avgTimeToMerge / recentUpdatedRepos.length,
+      avgCommentsPerMergedPR: avgCommentsPerMergedPR / recentUpdatedRepos.length,
+    },
   };
 }
 
-interface PullRequestCounts {
-  openPullRequests: number;
-  mergedPullRequests: number;
+interface PullRequestData {
+  open: number;
+  merged: number;
+  avgTimeToMerge: number;
+  avgCommentsPerMergedPR: number;
 }
 
-async function fetchPullRequestCountsForRepo(
+async function fetchPullRequestForRepo(
   octokit: Octokit,
   org: string,
   repo: string,
   since: Date
-): Promise<PullRequestCounts> {
+): Promise<PullRequestData> {
   const openPullRequests = await octokit.pulls.list({
     owner: org,
     repo,
@@ -142,8 +154,67 @@ async function fetchPullRequestCountsForRepo(
   });
 
   return {
-    openPullRequests: openPullRequestsSince.length,
-    mergedPullRequests: mergedPullRequestsSince.length,
+    open: openPullRequestsSince.length,
+    merged: mergedPullRequestsSince.length,
+    avgTimeToMerge: calculateAverageTimeToMerge(mergedPullRequestsSince),
+    avgCommentsPerMergedPR: await getAverageCommentsPerMergedPR(octokit, mergedPullRequestsSince),
   };
 }
 
+interface PullRequest {
+  created_at: string;
+  merged_at: string | null;
+  number: number;
+  base: {
+    repo: {
+      owner: {
+        login: string;
+      };
+      name: string;
+    };
+  };
+}
+
+function calculateAverageTimeToMerge(pullRequests: PullRequest[]): number {
+  const mergedPullRequests = pullRequests.filter((pr) => pr.merged_at !== null);
+
+  if (mergedPullRequests.length === 0) {
+    return 0;
+  }
+
+  const totalMergeTime = mergedPullRequests.reduce((acc, pr) => {
+    const createdAt = new Date(pr.created_at);
+    const mergedAt = new Date(pr.merged_at as string);
+    const diff = mergedAt.getTime() - createdAt.getTime();
+    return acc + diff;
+  }, 0);
+
+  return totalMergeTime / mergedPullRequests.length;
+}
+
+async function getAverageCommentsPerMergedPR(octokit: Octokit, mergedPullRequests: PullRequest[]) {
+  let totalComments = 0;
+  let prsWithComments = 0; // Track the number of PRs with comments
+
+  for (const pr of mergedPullRequests) {
+    // Fetch comments for each pull request
+    const comments = await octokit.pulls.listReviewComments({
+      owner: pr.base.repo.owner.login,
+      repo: pr.base.repo.name,
+      pull_number: pr.number,
+    });
+
+    // Add the number of comments to the total
+    totalComments += comments.data.length;
+
+    // Check if there are comments for this PR
+    if (comments.data.length > 0) {
+      prsWithComments++;
+    }
+  }
+
+  // Calculate the average comments per merged pull request
+  const averageComments = prsWithComments === 0 ? 0 : totalComments / prsWithComments;
+
+  return averageComments;
+}
