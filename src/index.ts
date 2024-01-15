@@ -1,13 +1,13 @@
 import { graphql } from '@octokit/graphql';
-import { OpenAI } from "langchain/llms/openai";
+// import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
-import { Client, isFullPage } from '@notionhq/client';
+// import { Client, isFullPage } from '@notionhq/client';
 
-import { fetchUserContributions, fetchOrganizationId } from "./github"
-import { getContributionSummary } from "./langchain";
-import { isTupleStringArray, ContributionSummary } from './types';
-import { getNamesAndHandles, updateDevSummary, addDate } from './notion';
-import { logger } from './logger';
+import { fetchOrganization } from "./github"
+// import { getContributionSummary } from "./langchain";
+// import { isTupleStringArray, ContributionSummary } from './types';
+// import { getNamesAndHandles, updateDevSummary, addDate } from './notion';
+// import { logger } from './logger';
 import { handleException } from './error';
 
 config();
@@ -21,64 +21,73 @@ const graphqlClient = graphql.defaults({
 });
 
 
-const openAIApiKey = process.env.OPENAI_API_KEY;
+// const openAIApiKey = process.env.OPENAI_API_KEY;
 
-const model = new OpenAI({
-  openAIApiKey,
-  temperature: 0.9,
-  modelName: "gpt-3.5-turbo",
-  // modelName: "gpt-4",
-});
+// const model = new OpenAI({
+//   openAIApiKey,
+//   temperature: 0.9,
+//   modelName: "gpt-3.5-turbo",
+//   // modelName: "gpt-4",
+// });
 
-const notionApiKey = process.env.NOTION_API_KEY;
-const databaseId = process.env.NOTION_DATABASE_ID as string;
-const updatesBlockId = process.env.NOTION_UPDATES_BLOCK_ID as string;
+// const notionApiKey = process.env.NOTION_API_KEY;
+// const databaseId = process.env.NOTION_DATABASE_ID as string;
+// const updatesBlockId = process.env.NOTION_UPDATES_BLOCK_ID as string;
 const githubOrg = process.env.GITHUB_ORG_NAME as string;
-const notion = new Client({ auth: notionApiKey });
+// const notion = new Client({ auth: notionApiKey });
 
 export async function main(
-  startDateInput?: Date, endDateInput?: Date
+  // startDateInput?: Date, endDateInput?: Date
 ) {
-  const endDate = endDateInput || new Date();
-  const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
+  // const endDate = endDateInput || new Date();
+  // const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
 
   try {
-    const tuples = await getNamesAndHandles(notion, isFullPage, databaseId);
+    // const tuples = await getNamesAndHandles(notion, isFullPage, databaseId);
 
-    if (!isTupleStringArray(tuples)) {
-      throw new Error('Invalid name and handles tuple array');
-    }
+    // if (!isTupleStringArray(tuples)) {
+    //   throw new Error('Invalid name and handles tuple array');
+    // }
 
-    await addDate(notion, updatesBlockId, endDate.toISOString().split('T')[0]);
+    // await addDate(notion, updatesBlockId, endDate.toISOString().split('T')[0]);
 
-    await Promise.all(tuples.map(async ([name, githubHandle]) => {
-      logger.info(`Fetching contributions for ${name} (${githubHandle})`);
-      const orgId = await fetchOrganizationId(graphqlClient, githubOrg);
-      const contributions = await fetchUserContributions(graphqlClient, orgId, githubHandle, startDate, endDate);
+    const data = await fetchOrganization(graphqlClient, githubOrg);
 
-      if (!contributions) {
-        throw new Error('Invalid contributions');
-      }
+    console.log(data);
 
-      // skip person if no contributions for a given time period
-      const { issueContributions, pullRequestContributions } = contributions.user.contributionsCollection;  
+    // await Promise.all(tuples.map(async (githubHandle) => {
+    //   logger.info(`Fetching contributions for ${githubHandle}`);
+    //   const orgId = await fetchOrganizationId(graphqlClient, githubOrg);
+    //   const contributions = await fetchUserContributions(graphqlClient, orgId, githubHandle, startDate, endDate);
 
-      if (issueContributions.nodes.length === 0 && pullRequestContributions.nodes.length === 0) {
-        logger.info(`No contributions for ${name} (${githubHandle})`);
-        return;
-      }
+    //   if (!contributions) {
+    //     throw new Error('Invalid contributions');
+    //   }
 
-      const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
+    //   // skip person if no contributions for a given time period
+    //   const { issueContributions, pullRequestContributions } = contributions.user.contributionsCollection;
 
-      if (!rawSummary) {
-        throw new Error('Invalid contribution summary');
-      }
+    //   if (issueContributions.nodes.length === 0 && pullRequestContributions.nodes.length === 0) {
+    //     logger.info(`No contributions for ${githubHandle}`);
+    //     return;
+    //   }
 
-      const summary: ContributionSummary = JSON.parse(rawSummary.text);
-      await updateDevSummary(notion, updatesBlockId, name, summary);
-    }));
+    //   const rawSummary = await getContributionSummary(model, JSON.stringify(contributions));
 
-    logger.info('All updates added to Notion!');
+    //   if (!rawSummary) {
+    //     throw new Error('Invalid contribution summary');
+    //   }
+
+    //   const summary: ContributionSummary = JSON.parse(rawSummary.text);
+
+    //   console.log(
+    //     `Summary for ${name} (${githubHandle}):\n`,
+    //     JSON.stringify(summary, null, 2)
+    //   );
+    //   // await updateDevSummary(notion, updatesBlockId, name, summary);
+    // }));
+
+    // logger.info('All updates added to Notion!');
   } catch (error) {
     handleException(error, 'main');
   }
