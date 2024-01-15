@@ -1,10 +1,10 @@
 import { graphql } from '@octokit/graphql';
 // import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
+import * as fsp from 'fs/promises';
 
-import { fetchOrganization } from "./github"
+import { fetchOrganizationRepos } from "./github"
 // import { getContributionSummary } from "./langchain";
-// import { isTupleStringArray, ContributionSummary } from './types';
 // import { logger } from './logger';
 import { handleException } from './error';
 
@@ -30,16 +30,11 @@ const graphqlClient = graphql.defaults({
 
 const githubOrg = process.env.GITHUB_ORG_NAME as string;
 
-export async function main(
-  // startDateInput?: Date, endDateInput?: Date
-) {
-  // const endDate = endDateInput || new Date();
-  // const startDate = startDateInput || new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() - 14);
-
+export async function main() {
   try {
-    const data = await fetchOrganization(graphqlClient, githubOrg);
+    const data = await fetchOrganizationRepos(graphqlClient, githubOrg);
 
-    console.log(data);
+    await fsp.writeFile('data.json', JSON.stringify(data, null, 2));
 
   } catch (error) {
     handleException(error, 'main');

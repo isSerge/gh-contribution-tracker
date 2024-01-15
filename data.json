@@ -1,0 +1,1332 @@
+[
+  {
+    "name": "subspace.github.io",
+    "description": "Developer website for subspace",
+    "url": "https://github.com/subspace/subspace.github.io",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2018-09-13T06:26:15Z",
+    "primaryLanguage": null
+  },
+  {
+    "name": "paper",
+    "description": "The subspace white paper",
+    "url": "https://github.com/subspace/paper",
+    "stargazerCount": 2,
+    "forkCount": 1,
+    "updatedAt": "2022-05-28T19:19:11Z",
+    "primaryLanguage": null
+  },
+  {
+    "name": "react-native-webrtc",
+    "description": "A WebRTC module for React Native.",
+    "url": "https://github.com/subspace/react-native-webrtc",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2018-07-28T20:13:42Z",
+    "primaryLanguage": {
+      "name": "Objective-C"
+    }
+  },
+  {
+    "name": "node-libs-react-native",
+    "description": "Node core modules for React Native",
+    "url": "https://github.com/subspace/node-libs-react-native",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2018-07-28T20:15:45Z",
+    "primaryLanguage": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "name": "design",
+    "description": "Collection of technical specs and architecture docs",
+    "url": "https://github.com/subspace/design",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-08-05T23:29:41Z",
+    "primaryLanguage": null
+  },
+  {
+    "name": "crypto",
+    "description": "Crypto module for subspace",
+    "url": "https://github.com/subspace/crypto",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-31T17:39:55Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "tracker",
+    "description": "Subspace core module for tracking membership of host nodes on the network",
+    "url": "https://github.com/subspace/tracker",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-31T17:40:40Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "storage",
+    "description": "Local storage adapter for subspace core protocol",
+    "url": "https://github.com/subspace/storage",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-27T20:32:38Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "jump-consistent-hash",
+    "description": null,
+    "url": "https://github.com/subspace/jump-consistent-hash",
+    "stargazerCount": 1,
+    "forkCount": 3,
+    "updatedAt": "2023-03-02T07:48:24Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "ledger",
+    "description": "A simple proof of space and time ledger",
+    "url": "https://github.com/subspace/ledger",
+    "stargazerCount": 1,
+    "forkCount": 1,
+    "updatedAt": "2023-05-02T17:24:47Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "rendezvous-hash",
+    "description": null,
+    "url": "https://github.com/subspace/rendezvous-hash",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2020-08-05T23:34:54Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-old-ts",
+    "description": "A decentralized, persistent, and highly available No-SQL database",
+    "url": "https://github.com/subspace/subspace-old-ts",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-28T07:05:04Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "utils",
+    "description": null,
+    "url": "https://github.com/subspace/utils",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-27T20:32:35Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "database",
+    "description": "Subspace database module",
+    "url": "https://github.com/subspace/database",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-27T20:32:36Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-client",
+    "description": "Light client SDK for the subspace network",
+    "url": "https://github.com/subspace/subspace-client",
+    "stargazerCount": 2,
+    "forkCount": 0,
+    "updatedAt": "2019-04-18T16:52:01Z",
+    "primaryLanguage": null
+  },
+  {
+    "name": "wallet",
+    "description": "Module for managing subspace identities and keys",
+    "url": "https://github.com/subspace/wallet",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-27T20:32:36Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "docker-bitcoin",
+    "description": null,
+    "url": "https://github.com/subspace/docker-bitcoin",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-03-17T16:04:47Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "docker-ethereum",
+    "description": null,
+    "url": "https://github.com/subspace/docker-ethereum",
+    "stargazerCount": 0,
+    "forkCount": 2,
+    "updatedAt": "2019-03-17T16:05:52Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "docker-ubuntu",
+    "description": null,
+    "url": "https://github.com/subspace/docker-ubuntu",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-03-03T14:08:04Z",
+    "primaryLanguage": {
+      "name": "Dockerfile"
+    }
+  },
+  {
+    "name": "docker-node",
+    "description": null,
+    "url": "https://github.com/subspace/docker-node",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-09-01T17:21:15Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "docker-nginx",
+    "description": null,
+    "url": "https://github.com/subspace/docker-nginx",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-03-17T21:36:10Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "subspace-console",
+    "description": "Console, debugger, and explorer for the Subspace network",
+    "url": "https://github.com/subspace/subspace-console",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-08-05T23:37:26Z",
+    "primaryLanguage": {
+      "name": "Vue"
+    }
+  },
+  {
+    "name": "vdf",
+    "description": "An implementation of Verifiable Delay Functions compiled from Rust to WebAssembly",
+    "url": "https://github.com/subspace/vdf",
+    "stargazerCount": 8,
+    "forkCount": 2,
+    "updatedAt": "2023-12-18T09:50:36Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "red-black-tree",
+    "description": "Advanced implementation of Red-black tree, which is a kind of self-balancing binary search tree for JavaScript",
+    "url": "https://github.com/subspace/red-black-tree",
+    "stargazerCount": 4,
+    "forkCount": 0,
+    "updatedAt": "2023-03-01T15:54:19Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "b-tree",
+    "description": "Generic B-Tree",
+    "url": "https://github.com/subspace/b-tree",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-06-23T13:11:16Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "pots",
+    "description": "A Proof-of-Transient-Space from Stacked Bipartite Expanders",
+    "url": "https://github.com/subspace/pots",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-06-24T17:44:33Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "reed-solomon-erasure",
+    "description": "Rust implementation of Reed-Solomon erasure coding",
+    "url": "https://github.com/subspace/reed-solomon-erasure",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-12-16T05:04:21Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "reed-solomon-erasure.wasm",
+    "description": null,
+    "url": "https://github.com/subspace/reed-solomon-erasure.wasm",
+    "stargazerCount": 6,
+    "forkCount": 4,
+    "updatedAt": "2023-12-28T04:45:58Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-core",
+    "description": "Reference implementation for the subspace network blockchain",
+    "url": "https://github.com/subspace/subspace-core",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-01-31T17:40:26Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "bls-signatures",
+    "description": "BLS signatures in C++, using the relic toolkit",
+    "url": "https://github.com/subspace/bls-signatures",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-09-10T16:47:20Z",
+    "primaryLanguage": {
+      "name": "C"
+    }
+  },
+  {
+    "name": "sloth-permutation",
+    "description": null,
+    "url": "https://github.com/subspace/sloth-permutation",
+    "stargazerCount": 1,
+    "forkCount": 1,
+    "updatedAt": "2021-04-28T14:03:02Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "benchmarks",
+    "description": "Simple benchmarking scripts for the Subspace Ledger",
+    "url": "https://github.com/subspace/benchmarks",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-12-17T06:05:25Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "simulator",
+    "description": null,
+    "url": "https://github.com/subspace/simulator",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-12-14T22:18:48Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "c-accelerator",
+    "description": null,
+    "url": "https://github.com/subspace/c-accelerator",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2019-12-19T05:11:00Z",
+    "primaryLanguage": {
+      "name": "C"
+    }
+  },
+  {
+    "name": "rust-simulator",
+    "description": null,
+    "url": "https://github.com/subspace/rust-simulator",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-05-10T21:38:20Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "merkle-tree-binary.rs",
+    "description": null,
+    "url": "https://github.com/subspace/merkle-tree-binary.rs",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-01-16T00:45:18Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "aes-benchmarks",
+    "description": null,
+    "url": "https://github.com/subspace/aes-benchmarks",
+    "stargazerCount": 2,
+    "forkCount": 0,
+    "updatedAt": "2020-04-05T20:32:59Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "fork-simulator",
+    "description": null,
+    "url": "https://github.com/subspace/fork-simulator",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-04-03T03:29:08Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "rust-aes-proofs",
+    "description": null,
+    "url": "https://github.com/subspace/rust-aes-proofs",
+    "stargazerCount": 2,
+    "forkCount": 0,
+    "updatedAt": "2022-06-05T13:59:02Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "rust-mem-proofs",
+    "description": null,
+    "url": "https://github.com/subspace/rust-mem-proofs",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-06-21T21:38:46Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "subspace-core-rust",
+    "description": "A simple blockchain based on proofs-of-replication for the Subspace Network, implemented in pure Rust.",
+    "url": "https://github.com/subspace/subspace-core-rust",
+    "stargazerCount": 2,
+    "forkCount": 1,
+    "updatedAt": "2022-02-21T10:19:06Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "chainbase",
+    "description": null,
+    "url": "https://github.com/subspace/chainbase",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2020-12-14T00:31:32Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "spartan-codec",
+    "description": "A time-asymmetric permutation based on SLOTH",
+    "url": "https://github.com/subspace/spartan-codec",
+    "stargazerCount": 1,
+    "forkCount": 1,
+    "updatedAt": "2021-06-13T17:38:50Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "substrate-stencil",
+    "description": "A simple proof-of-space blockchain built using Substrate.",
+    "url": "https://github.com/subspace/substrate-stencil",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2021-04-06T05:19:52Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "spartan-farmer",
+    "description": "A bare-bones farmer for Spartan PoC",
+    "url": "https://github.com/subspace/spartan-farmer",
+    "stargazerCount": 5,
+    "forkCount": 5,
+    "updatedAt": "2023-07-27T04:51:27Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "white-paper",
+    "description": "The subspace technical whitepaper.",
+    "url": "https://github.com/subspace/white-paper",
+    "stargazerCount": 1,
+    "forkCount": 0,
+    "updatedAt": "2021-04-13T19:08:10Z",
+    "primaryLanguage": {
+      "name": "TeX"
+    }
+  },
+  {
+    "name": "Open-Grants-Program",
+    "description": "Web3 Foundation Open Grants Program",
+    "url": "https://github.com/subspace/Open-Grants-Program",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2021-04-09T01:59:43Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "spartan-node-template",
+    "description": null,
+    "url": "https://github.com/subspace/spartan-node-template",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-04-13T19:06:40Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "substrate",
+    "description": "Substrate: The platform for blockchain innovators",
+    "url": "https://github.com/subspace/substrate",
+    "stargazerCount": 6,
+    "forkCount": 7,
+    "updatedAt": "2023-03-25T06:16:14Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "rust-in-blockchain",
+    "description": "Source code for rib.rs",
+    "url": "https://github.com/subspace/rust-in-blockchain",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-11-15T10:15:40Z",
+    "primaryLanguage": {
+      "name": "CSS"
+    }
+  },
+  {
+    "name": "Grant-Milestone-Delivery",
+    "description": "Repository to submit finished milestones",
+    "url": "https://github.com/subspace/Grant-Milestone-Delivery",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-08-02T04:28:20Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "substrate-front-end-template",
+    "description": "A Polkadot.js API + React based template for building Substrate Front Ends",
+    "url": "https://github.com/subspace/substrate-front-end-template",
+    "stargazerCount": 0,
+    "forkCount": 2,
+    "updatedAt": "2021-06-06T15:24:03Z",
+    "primaryLanguage": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "name": "decoupled-execution-experiment",
+    "description": null,
+    "url": "https://github.com/subspace/decoupled-execution-experiment",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-06-20T21:18:12Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "sloth-GPU",
+    "description": "GPU implementation of sloth",
+    "url": "https://github.com/subspace/sloth-GPU",
+    "stargazerCount": 1,
+    "forkCount": 0,
+    "updatedAt": "2021-08-31T12:27:23Z",
+    "primaryLanguage": {
+      "name": "C"
+    }
+  },
+  {
+    "name": "subspace-desktop",
+    "description": "A simple desktop farmer for the Subspace Network",
+    "url": "https://github.com/subspace/subspace-desktop",
+    "stargazerCount": 62,
+    "forkCount": 22,
+    "updatedAt": "2023-12-28T18:01:09Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "snowbridge",
+    "description": "A trustless bridge between Polkadot and Ethereum",
+    "url": "https://github.com/subspace/snowbridge",
+    "stargazerCount": 1,
+    "forkCount": 0,
+    "updatedAt": "2023-02-17T06:13:23Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "polkascan-os",
+    "description": "Polkascan Open Source",
+    "url": "https://github.com/subspace/polkascan-os",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-08-21T15:52:09Z",
+    "primaryLanguage": null
+  },
+  {
+    "name": "polkascan-pre-harvester",
+    "description": "Polkascan PRE Harvester",
+    "url": "https://github.com/subspace/polkascan-pre-harvester",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-08-21T17:07:49Z",
+    "primaryLanguage": {
+      "name": "Python"
+    }
+  },
+  {
+    "name": "subspace",
+    "description": "Subspace Network reference implementation",
+    "url": "https://github.com/subspace/subspace",
+    "stargazerCount": 297,
+    "forkCount": 226,
+    "updatedAt": "2024-01-09T16:29:25Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "polkascan-pre-explorer-api",
+    "description": "Polkascan PRE Explorer API",
+    "url": "https://github.com/subspace/polkascan-pre-explorer-api",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-08-22T22:44:23Z",
+    "primaryLanguage": {
+      "name": "Python"
+    }
+  },
+  {
+    "name": "sloth256-189",
+    "description": "Encoder/decoder for the Subspace Network Blockchain based on the SLOTH permutation",
+    "url": "https://github.com/subspace/sloth256-189",
+    "stargazerCount": 4,
+    "forkCount": 3,
+    "updatedAt": "2023-06-16T21:40:12Z",
+    "primaryLanguage": {
+      "name": "Assembly"
+    }
+  },
+  {
+    "name": "polkadot-js-apps",
+    "description": "Basic Polkadot/Substrate UI for interacting with a node. This is the main user-facing application, allowing access to all features available on Substrate chains.",
+    "url": "https://github.com/subspace/polkadot-js-apps",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-12-14T18:58:57Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "infra",
+    "description": null,
+    "url": "https://github.com/subspace/infra",
+    "stargazerCount": 5,
+    "forkCount": 4,
+    "updatedAt": "2023-12-26T03:54:23Z",
+    "primaryLanguage": {
+      "name": "HCL"
+    }
+  },
+  {
+    "name": "subspace.js",
+    "description": "Client library for easy get/put storage interaction with Subspace Network blockchain",
+    "url": "https://github.com/subspace/subspace.js",
+    "stargazerCount": 3,
+    "forkCount": 107,
+    "updatedAt": "2022-11-23T01:16:12Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "monk-spartan-template",
+    "description": null,
+    "url": "https://github.com/subspace/monk-spartan-template",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-09-11T11:54:23Z",
+    "primaryLanguage": null
+  },
+  {
+    "name": "status",
+    "description": "Subspace Labs & Subspace Network Status Page",
+    "url": "https://github.com/subspace/status",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-11-27T17:26:18Z",
+    "primaryLanguage": {
+      "name": "JSON"
+    }
+  },
+  {
+    "name": "subspace-relayer",
+    "description": "A permanent archival storage service for Polkadot and Kusama. Powered by the Subspace Network.",
+    "url": "https://github.com/subspace/subspace-relayer",
+    "stargazerCount": 10,
+    "forkCount": 8,
+    "updatedAt": "2023-12-25T06:12:52Z",
+    "primaryLanguage": {
+      "name": "CSS"
+    }
+  },
+  {
+    "name": "uptime-kuma",
+    "description": "A fancy self-hosted monitoring tool",
+    "url": "https://github.com/subspace/uptime-kuma",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-10-27T02:37:16Z",
+    "primaryLanguage": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "name": "open-runtime-module-library",
+    "description": "Substrate Open Runtime Module Library",
+    "url": "https://github.com/subspace/open-runtime-module-library",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-10-27T03:45:59Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "polkadot-js-api",
+    "description": "Promise and RxJS APIs around Polkadot and any Substrate-based chain RPC calls. It is dynamically generated based on what the Substrate runtime provides in terms of metadata. Full documentation & examples available",
+    "url": "https://github.com/subspace/polkadot-js-api",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-11-02T21:39:27Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "polkadot-js-common",
+    "description": "Utilities and base libraries for use across polkadot-js. Includes base libraries, crypto helpers and cross-environment helpers. Full documentation & examples available",
+    "url": "https://github.com/subspace/polkadot-js-common",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-11-02T21:51:36Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "ribbot",
+    "description": "Script for querying merged PRs, open issues, and closed issues from config repos.",
+    "url": "https://github.com/subspace/ribbot",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-11-05T03:52:41Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "cumulus",
+    "description": "Write Parachains on Substrate",
+    "url": "https://github.com/subspace/cumulus",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-11-13T19:06:14Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "polkadot",
+    "description": "Polkadot Node Implementation",
+    "url": "https://github.com/subspace/polkadot",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-11-13T19:06:58Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "multicodec",
+    "description": "Compact self-describing codecs. Save space by using predefined multicodec tables.",
+    "url": "https://github.com/subspace/multicodec",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2021-12-02T16:23:22Z",
+    "primaryLanguage": {
+      "name": "Python"
+    }
+  },
+  {
+    "name": "NFTHack-2022",
+    "description": "Repo for Subspace Lab's Team for the Eth NFTHack 2022 Hackathon",
+    "url": "https://github.com/subspace/NFTHack-2022",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-01-16T16:56:27Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-nft-examples",
+    "description": null,
+    "url": "https://github.com/subspace/subspace-nft-examples",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-04-13T16:28:48Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-docs",
+    "description": "Official Documentation for Subspace Labs & the Subspace Network",
+    "url": "https://github.com/subspace/subspace-docs",
+    "stargazerCount": 6,
+    "forkCount": 28,
+    "updatedAt": "2024-01-04T01:09:17Z",
+    "primaryLanguage": {
+      "name": "MDX"
+    }
+  },
+  {
+    "name": "NEARHack-2022",
+    "description": null,
+    "url": "https://github.com/subspace/NEARHack-2022",
+    "stargazerCount": 2,
+    "forkCount": 1,
+    "updatedAt": "2023-12-13T16:30:13Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "block-vote-authorship-collector",
+    "description": null,
+    "url": "https://github.com/subspace/block-vote-authorship-collector",
+    "stargazerCount": 2,
+    "forkCount": 0,
+    "updatedAt": "2023-10-17T21:26:20Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-regenesis-tool",
+    "description": null,
+    "url": "https://github.com/subspace/subspace-regenesis-tool",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2022-04-07T09:26:19Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "substation",
+    "description": "Polkadot Telemetry service",
+    "url": "https://github.com/subspace/substation",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2023-08-09T23:11:53Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "polkadot-validator-setup",
+    "description": "Polkadot Validator Secure Setup",
+    "url": "https://github.com/subspace/polkadot-validator-setup",
+    "stargazerCount": 1,
+    "forkCount": 0,
+    "updatedAt": "2022-04-30T23:08:50Z",
+    "primaryLanguage": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "name": "merkle_light",
+    "description": "_merkle_ is a lightweight Rust implementation of a Merkle tree, external dependencies agnostic, std::hash compatible with efficient memory layout",
+    "url": "https://github.com/subspace/merkle_light",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-04-29T18:17:15Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "rust-libp2p",
+    "description": "The Rust Implementation of the libp2p networking stack. ",
+    "url": "https://github.com/subspace/rust-libp2p",
+    "stargazerCount": 0,
+    "forkCount": 2,
+    "updatedAt": "2022-12-27T10:18:11Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "infra-archive",
+    "description": "Repo for IaaC and corresponding examples ",
+    "url": "https://github.com/subspace/infra-archive",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-09-07T09:51:50Z",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  },
+  {
+    "name": "tauri-update-cloudflare",
+    "description": "A Tauri update server, hosted as a Cloudflare edge function ",
+    "url": "https://github.com/subspace/tauri-update-cloudflare",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-07-04T09:49:09Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "tracing-keep-last-n-logs",
+    "description": "Application level tracing for Rust.",
+    "url": "https://github.com/subspace/tracing-keep-last-n-logs",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-09-25T07:45:07Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "parity-db",
+    "description": "Experimental blockchain database",
+    "url": "https://github.com/subspace/parity-db",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-08-25T03:29:05Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "pulsar",
+    "description": "The Subspace Network CLI for Nodes and Farmers",
+    "url": "https://github.com/subspace/pulsar",
+    "stargazerCount": 27,
+    "forkCount": 17,
+    "updatedAt": "2024-01-12T14:19:28Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "plonk",
+    "description": "Pure Rust implementation of the PLONK ZKProof System done by the Dusk-Network team. ",
+    "url": "https://github.com/subspace/plonk",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2022-09-12T07:20:54Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "subspace-sdk",
+    "description": "The Rust SDK for the Subspace Network",
+    "url": "https://github.com/subspace/subspace-sdk",
+    "stargazerCount": 7,
+    "forkCount": 1,
+    "updatedAt": "2023-10-04T16:02:13Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "astral",
+    "description": "Future home of our Blockexplorer",
+    "url": "https://github.com/subspace/astral",
+    "stargazerCount": 2,
+    "forkCount": 5,
+    "updatedAt": "2023-12-23T05:39:08Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "consensus-v2-research-paper",
+    "description": "Subspace consensus v2",
+    "url": "https://github.com/subspace/consensus-v2-research-paper",
+    "stargazerCount": 3,
+    "forkCount": 0,
+    "updatedAt": "2023-03-06T20:54:00Z",
+    "primaryLanguage": {
+      "name": "TeX"
+    }
+  },
+  {
+    "name": "milagro_bls",
+    "description": "BLS12-381 cryptography using Apache Milagro",
+    "url": "https://github.com/subspace/milagro_bls",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-02-22T13:45:06Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "incubator-milagro-crypto-rust",
+    "description": "Apache Milagro Crypto Library - Rust Version",
+    "url": "https://github.com/subspace/incubator-milagro-crypto-rust",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-02-22T13:34:28Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "rust-kzg",
+    "description": null,
+    "url": "https://github.com/subspace/rust-kzg",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-03-20T02:02:45Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "chiapos",
+    "description": "Chia Proof of Space library",
+    "url": "https://github.com/subspace/chiapos",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-03-01T19:27:25Z",
+    "primaryLanguage": {
+      "name": "HTML"
+    }
+  },
+  {
+    "name": "blst",
+    "description": "Multilingual BLS12-381 signature library",
+    "url": "https://github.com/subspace/blst",
+    "stargazerCount": 0,
+    "forkCount": 2,
+    "updatedAt": "2023-03-02T04:36:00Z",
+    "primaryLanguage": {
+      "name": "Assembly"
+    }
+  },
+  {
+    "name": "frontier",
+    "description": "Ethereum compatibility layer for Substrate.",
+    "url": "https://github.com/subspace/frontier",
+    "stargazerCount": 0,
+    "forkCount": 2,
+    "updatedAt": "2024-01-02T22:48:57Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "RepoRanger",
+    "description": "A tool for prompt-driven development",
+    "url": "https://github.com/subspace/RepoRanger",
+    "stargazerCount": 2,
+    "forkCount": 1,
+    "updatedAt": "2023-06-09T04:36:42Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "mud",
+    "description": "MUD is an engine for Autonomous Worlds",
+    "url": "https://github.com/subspace/mud",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-05-08T16:41:44Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "neural-notes",
+    "description": null,
+    "url": "https://github.com/subspace/neural-notes",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-05-11T21:38:28Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "aw-hack",
+    "description": null,
+    "url": "https://github.com/subspace/aw-hack",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-05-19T09:03:24Z",
+    "primaryLanguage": {
+      "name": "Solidity"
+    }
+  },
+  {
+    "name": "SupportGPT",
+    "description": "A Subspace support bot built on Langchain for the Subspace Community. ",
+    "url": "https://github.com/subspace/SupportGPT",
+    "stargazerCount": 3,
+    "forkCount": 0,
+    "updatedAt": "2023-08-14T20:29:21Z",
+    "primaryLanguage": {
+      "name": "Python"
+    }
+  },
+  {
+    "name": "chatbot",
+    "description": null,
+    "url": "https://github.com/subspace/chatbot",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-06-08T21:03:57Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "scale-info",
+    "description": "Info about SCALE encodable Rust types",
+    "url": "https://github.com/subspace/scale-info",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-06-15T09:19:21Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "layerzero_testnet_bridge",
+    "description": "This repository hosts a implementation of LayerZero oracle and relayer combined in one binary. ",
+    "url": "https://github.com/subspace/layerzero_testnet_bridge",
+    "stargazerCount": 2,
+    "forkCount": 0,
+    "updatedAt": "2023-10-18T08:36:09Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "subnomicon",
+    "description": "The Subspace Network Protocol Knowledge Base",
+    "url": "https://github.com/subspace/subnomicon",
+    "stargazerCount": 1,
+    "forkCount": 3,
+    "updatedAt": "2023-10-31T16:20:38Z",
+    "primaryLanguage": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "name": "faucet",
+    "description": "Faucet Discord bot + smart contract",
+    "url": "https://github.com/subspace/faucet",
+    "stargazerCount": 3,
+    "forkCount": 0,
+    "updatedAt": "2023-09-18T21:43:12Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "squid-sdk",
+    "description": "The main repo of the squid SDK",
+    "url": "https://github.com/subspace/squid-sdk",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-08-18T19:11:19Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "blockscout-frontend",
+    "description": "Front-end application for Blockscout",
+    "url": "https://github.com/subspace/blockscout-frontend",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-09-21T19:08:17Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "polkadot-sdk",
+    "description": "The Parity Polkadot Blockchain SDK",
+    "url": "https://github.com/subspace/polkadot-sdk",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2023-09-13T14:21:06Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "trie",
+    "description": "Base-16 Modified Patricia Merkle Tree (aka Trie)",
+    "url": "https://github.com/subspace/trie",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-09-18T16:36:58Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "blockscout-backend",
+    "description": "Blockchain explorer for Ethereum based network and a tool for inspecting and analyzing EVM based blockchains. ",
+    "url": "https://github.com/subspace/blockscout-backend",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-09-27T14:05:31Z",
+    "primaryLanguage": {
+      "name": "Elixir"
+    }
+  },
+  {
+    "name": "staking-interface",
+    "description": "Staking Interface for Subspace Network using Next.js, React, TypeScript, and Chakra UI",
+    "url": "https://github.com/subspace/staking-interface",
+    "stargazerCount": 1,
+    "forkCount": 1,
+    "updatedAt": "2023-10-31T20:47:26Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "domain-transaction-producer",
+    "description": "Domain Transaction Producer for Subspace EVM Network",
+    "url": "https://github.com/subspace/domain-transaction-producer",
+    "stargazerCount": 1,
+    "forkCount": 2,
+    "updatedAt": "2023-11-17T04:27:46Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  },
+  {
+    "name": "metamask-snap-subspace",
+    "description": "Metamask plugin for interacting with Subspace dapps.",
+    "url": "https://github.com/subspace/metamask-snap-subspace",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-11-17T12:57:23Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "faucet-nova-subgraph",
+    "description": null,
+    "url": "https://github.com/subspace/faucet-nova-subgraph",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2023-11-28T16:38:11Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "auto-mobile",
+    "description": "Auto Typescript SDK",
+    "url": "https://github.com/subspace/auto-mobile",
+    "stargazerCount": 0,
+    "forkCount": 1,
+    "updatedAt": "2023-12-18T18:50:18Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "auto-contracts-hardhat",
+    "description": "Contracts-hardhat template created via Semaphore-cli for Auto",
+    "url": "https://github.com/subspace/auto-contracts-hardhat",
+    "stargazerCount": 2,
+    "forkCount": 1,
+    "updatedAt": "2024-01-01T10:04:31Z",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    }
+  },
+  {
+    "name": "subspace-evm-contracts",
+    "description": "All EVM Contracts deployed on Subspace Nova",
+    "url": "https://github.com/subspace/subspace-evm-contracts",
+    "stargazerCount": 0,
+    "forkCount": 0,
+    "updatedAt": "2024-01-10T06:48:41Z",
+    "primaryLanguage": {
+      "name": "Rust"
+    }
+  }
+]
