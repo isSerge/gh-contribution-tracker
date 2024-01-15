@@ -10,7 +10,7 @@ interface RepositoryNode {
 }
 
 interface IssueCounts {
-  newIssues: number;
+  openIssues: number;
   closedIssues: number;
 }
 
@@ -47,7 +47,7 @@ export async function fetchOrganizationRepos(octokit: Octokit, org: string): Pro
 
 export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, repo: string, since: Date
 ): Promise<IssueCounts> {
-  const issuesNew = await octokit.issues.listForRepo({
+  const issuesOpen = await octokit.issues.listForRepo({
     owner: org,
     repo,
     state: 'open',
@@ -62,7 +62,7 @@ export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, rep
   });
 
   return {
-    newIssues: issuesNew.data.length,
+    openIssues: issuesOpen.data.length,
     closedIssues: issuesClosed.data.length,
   };
 }
@@ -72,8 +72,10 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
   let stars = 0;
   let forks = 0;
   const recentUpdatedRepos: RepositoryNode[] = [];
-  let newIssues = 0;
+  let openIssues = 0;
   let closedIssues = 0;
+  let newPRs = 0;
+  let mergedPRs = 0;
 
   for (const repo of repos) {
     stars += repo.stargazerCount;
@@ -83,12 +85,70 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
       recentUpdatedRepos.push(repo);
 
       const issueCounts = await fetchIssueCountsForRepo(octokit, githubOrg, repo.name, since);
+      const prCounts = await fetchPullRequestCountsForRepo(octokit, githubOrg, repo.name, since);
 
-      newIssues += issueCounts.newIssues;
+      openIssues += issueCounts.openIssues;
       closedIssues += issueCounts.closedIssues;
+      newPRs += prCounts.openPullRequests;
+      mergedPRs += prCounts.mergedPullRequests;
     }
   }
 
-  return { stars, forks, repoCount: repos.length, recentUpdatedRepos, newIssues, closedIssues };
+  return {
+    stars,
+    forks,
+    repoCount: repos.length,
+    recentUpdatedRepos,
+    openIssues,
+    closedIssues,
+    newPRs,
+    mergedPRs,
+  };
+}
+
+interface PullRequestCounts {
+  openPullRequests: number;
+  mergedPullRequests: number;
+}
+
+async function fetchPullRequestCountsForRepo(
+  octokit: Octokit,
+  org: string,
+  repo: string,
+  since: Date
+): Promise<PullRequestCounts> {
+  try {
+    const openPullRequests = await octokit.pulls.list({
+      owner: org,
+      repo,
+      state: 'open',
+    });
+
+    const mergedPullRequests = await octokit.pulls.list({
+      owner: org,
+      repo,
+      state: 'closed',
+      base: 'main',
+    });
+
+    const openPullRequestsSince = openPullRequests.data.filter(
+      (pr) => new Date(pr.created_at) >= since
+    );
+
+    const mergedPullRequestsSince = mergedPullRequests.data.filter((pr) => {
+      if (pr.merged_at !== null) {
+        return new Date(pr.merged_at) >= since;
+      }
+      return false;
+    });
+
+    return {
+      openPullRequests: openPullRequestsSince.length,
+      mergedPullRequests: mergedPullRequestsSince.length,
+    };
+  } catch (error) {
+    console.error(`Error fetching pull requests for ${repo}:`, error);
+    return { openPullRequests: 0, mergedPullRequests: 0 };
+  }
 }
 
