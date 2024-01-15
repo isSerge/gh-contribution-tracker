@@ -10,11 +10,20 @@ interface RepositoryNode {
 }
 
 interface IssueCounts {
-  openIssues: number;
-  closedIssues: number;
+  open: number;
+  closed: number;
 }
 
-export async function fetchOrganizationRepos(octokit: Octokit, org: string): Promise<RepositoryNode[]> {
+interface OrganizationActivity {
+  stars: number;
+  forks: number;
+  repoCount: number;
+  recentUpdatedRepos: RepositoryNode[];
+  issues: IssueCounts;
+  pullRequests: PullRequestData;
+}
+
+export async function fetchOrganizationActivity(octokit: Octokit, org: string, since: Date): Promise<OrganizationActivity> {
   const allRepos: RepositoryNode[] = [];
   let page = 1;
   let hasNextPage = true;
@@ -42,7 +51,9 @@ export async function fetchOrganizationRepos(octokit: Octokit, org: string): Pro
     page++;
   }
 
-  return allRepos;
+  const result = await aggregateData(octokit, org, allRepos, since);
+
+  return result;
 }
 
 export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, repo: string, since: Date
@@ -62,19 +73,19 @@ export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, rep
   });
 
   return {
-    openIssues: issuesOpen.data.length,
-    closedIssues: issuesClosed.data.length,
+    open: issuesOpen.data.length,
+    closed: issuesClosed.data.length,
   };
 }
 
 
-export async function aggregateData(octokit: Octokit, githubOrg: string, repos: RepositoryNode[], since: Date) {
+async function aggregateData(octokit: Octokit, githubOrg: string, repos: RepositoryNode[], since: Date) {
   let stars = 0;
   let forks = 0;
   const recentUpdatedRepos: RepositoryNode[] = [];
   let openIssues = 0;
   let closedIssues = 0;
-  let newPRs = 0;
+  let openPRs = 0;
   let mergedPRs = 0;
   let avgTimeToMerge = 0;
   let avgCommentsPerMergedPR = 0;
@@ -89,9 +100,9 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
       const issueCounts = await fetchIssueCountsForRepo(octokit, githubOrg, repo.name, since);
       const prData = await fetchPullRequestForRepo(octokit, githubOrg, repo.name, since);
 
-      openIssues += issueCounts.openIssues;
-      closedIssues += issueCounts.closedIssues;
-      newPRs += prData.open;
+      openIssues += issueCounts.open;
+      closedIssues += issueCounts.closed;
+      openPRs += prData.open;
       mergedPRs += prData.merged;
       avgTimeToMerge += prData.avgTimeToMerge;
       avgCommentsPerMergedPR += prData.avgCommentsPerMergedPR;
@@ -108,7 +119,7 @@ export async function aggregateData(octokit: Octokit, githubOrg: string, repos: 
       closed: closedIssues,
     },
     pullRequests: {
-      new: newPRs,
+      open: openPRs,
       merged: mergedPRs,
       avgTimeToMerge: avgTimeToMerge / recentUpdatedRepos.length,
       avgCommentsPerMergedPR: avgCommentsPerMergedPR / recentUpdatedRepos.length,

@@ -3,7 +3,7 @@ import { Octokit } from '@octokit/rest';
 import { config } from 'dotenv';
 // import * as fsp from 'fs/promises';
 
-import { fetchOrganizationRepos, aggregateData } from "./github"
+import { fetchOrganizationActivity } from "./github"
 // import { getContributionSummary } from "./langchain";
 // import { logger } from './logger';
 import { handleException } from './error';
@@ -31,12 +31,9 @@ export async function main() {
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
   try {
-    const data = await fetchOrganizationRepos(octokit, githubOrg);
-    const aggregated = await aggregateData(octokit, githubOrg, data, oneWeekAgo);
+    const data = await fetchOrganizationActivity(octokit, githubOrg, oneWeekAgo);
 
-    console.log(aggregated);
-
-    // await fsp.writeFile('data.json', JSON.stringify(aggregated, null, 2));
+    console.log(data);
 
   } catch (error) {
     handleException(error, 'main');
