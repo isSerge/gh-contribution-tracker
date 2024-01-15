@@ -7,9 +7,6 @@ interface RepositoryNode {
   stargazerCount: number;
   forkCount: number;
   updatedAt: string;
-  primaryLanguage: {
-    name: string;
-  };
 }
 
 interface RepositoryEdge {
@@ -50,9 +47,6 @@ export async function fetchOrganizationRepos(client: typeof graphql, org: string
               stargazerCount
               forkCount
               updatedAt
-              primaryLanguage {
-                name
-              }
             }
             cursor
           }
@@ -73,4 +67,21 @@ export async function fetchOrganizationRepos(client: typeof graphql, org: string
   }
 
   return allRepos;
+}
+
+export function aggregateData(repos: RepositoryNode[], since: Date) {
+  let totalStars = 0;
+  let totalForks = 0;
+  const recentUpdatedRepos: RepositoryNode[] = [];
+
+  repos.forEach(repo => {
+    totalStars += repo.stargazerCount;
+    totalForks += repo.forkCount;
+
+    if (new Date(repo.updatedAt) > since) {
+      recentUpdatedRepos.push(repo);
+    }
+  });
+
+  return { totalStars, totalForks, totalCount: repos.length, recentUpdatedRepos };
 }

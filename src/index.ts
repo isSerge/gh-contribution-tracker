@@ -1,9 +1,9 @@
 import { graphql } from '@octokit/graphql';
 // import { OpenAI } from "langchain/llms/openai";
 import { config } from 'dotenv';
-import * as fsp from 'fs/promises';
+// import * as fsp from 'fs/promises';
 
-import { fetchOrganizationRepos } from "./github"
+import { fetchOrganizationRepos, aggregateData } from "./github"
 // import { getContributionSummary } from "./langchain";
 // import { logger } from './logger';
 import { handleException } from './error';
@@ -31,10 +31,14 @@ const graphqlClient = graphql.defaults({
 const githubOrg = process.env.GITHUB_ORG_NAME as string;
 
 export async function main() {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
   try {
     const data = await fetchOrganizationRepos(graphqlClient, githubOrg);
+    const aggregated = aggregateData(data, oneWeekAgo);
 
-    await fsp.writeFile('data.json', JSON.stringify(data, null, 2));
+    console.log(aggregated);
+    // await fsp.writeFile('data.json', JSON.stringify(data, null, 2));
 
   } catch (error) {
     handleException(error, 'main');
