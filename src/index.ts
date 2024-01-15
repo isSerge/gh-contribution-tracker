@@ -32,7 +32,7 @@ export async function main() {
 
   try {
     const data = await fetchOrganizationRepos(octokit, githubOrg);
-    const aggregated = aggregateData(data, oneWeekAgo);
+    const aggregated = await aggregateData(octokit, githubOrg, data, oneWeekAgo);
 
     console.log(aggregated);
 

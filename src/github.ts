@@ -9,6 +9,11 @@ interface RepositoryNode {
   updatedAt: string;
 }
 
+interface IssueCounts {
+  newIssues: number;
+  closedIssues: number;
+}
+
 export async function fetchOrganizationRepos(octokit: Octokit, org: string): Promise<RepositoryNode[]> {
   const allRepos: RepositoryNode[] = [];
   let page = 1;
@@ -40,20 +45,50 @@ export async function fetchOrganizationRepos(octokit: Octokit, org: string): Pro
   return allRepos;
 }
 
+export async function fetchIssueCountsForRepo(octokit: Octokit, org: string, repo: string, since: Date
+): Promise<IssueCounts> {
+  const issuesNew = await octokit.issues.listForRepo({
+    owner: org,
+    repo,
+    state: 'open',
+    since: since.toISOString(),
+  });
 
-export function aggregateData(repos: RepositoryNode[], since: Date) {
+  const issuesClosed = await octokit.issues.listForRepo({
+    owner: org,
+    repo,
+    state: 'closed',
+    since: since.toISOString(),
+  });
+
+  return {
+    newIssues: issuesNew.data.length,
+    closedIssues: issuesClosed.data.length,
+  };
+}
+
+
+export async function aggregateData(octokit: Octokit, githubOrg: string, repos: RepositoryNode[], since: Date) {
   let totalStars = 0;
   let totalForks = 0;
   const recentUpdatedRepos: RepositoryNode[] = [];
+  let totalNewIssues = 0;
+  let totalClosedIssues = 0;
 
-  repos.forEach(repo => {
+  for (const repo of repos) {
     totalStars += repo.stargazerCount;
     totalForks += repo.forkCount;
 
     if (new Date(repo.updatedAt) > since) {
       recentUpdatedRepos.push(repo);
-    }
-  });
 
-  return { totalStars, totalForks, totalCount: repos.length, recentUpdatedRepos };
+      const { newIssues, closedIssues } = await fetchIssueCountsForRepo(octokit, githubOrg, repo.name, since);
+
+      totalNewIssues += newIssues;
+      totalClosedIssues += closedIssues;
+    }
+  }
+
+  return { totalStars, totalForks, totalCount: repos.length, recentUpdatedRepos, totalNewIssues, totalClosedIssues };
 }
+
