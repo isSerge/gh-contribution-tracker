@@ -117,38 +117,33 @@ async function fetchPullRequestCountsForRepo(
   repo: string,
   since: Date
 ): Promise<PullRequestCounts> {
-  try {
-    const openPullRequests = await octokit.pulls.list({
-      owner: org,
-      repo,
-      state: 'open',
-    });
+  const openPullRequests = await octokit.pulls.list({
+    owner: org,
+    repo,
+    state: 'open',
+  });
 
-    const mergedPullRequests = await octokit.pulls.list({
-      owner: org,
-      repo,
-      state: 'closed',
-      base: 'main',
-    });
+  const mergedPullRequests = await octokit.pulls.list({
+    owner: org,
+    repo,
+    state: 'closed',
+    base: 'main',
+  });
 
-    const openPullRequestsSince = openPullRequests.data.filter(
-      (pr) => new Date(pr.created_at) >= since
-    );
+  const openPullRequestsSince = openPullRequests.data.filter(
+    (pr) => new Date(pr.created_at) >= since
+  );
 
-    const mergedPullRequestsSince = mergedPullRequests.data.filter((pr) => {
-      if (pr.merged_at !== null) {
-        return new Date(pr.merged_at) >= since;
-      }
-      return false;
-    });
+  const mergedPullRequestsSince = mergedPullRequests.data.filter((pr) => {
+    if (pr.merged_at !== null) {
+      return new Date(pr.merged_at) >= since;
+    }
+    return false;
+  });
 
-    return {
-      openPullRequests: openPullRequestsSince.length,
-      mergedPullRequests: mergedPullRequestsSince.length,
-    };
-  } catch (error) {
-    console.error(`Error fetching pull requests for ${repo}:`, error);
-    return { openPullRequests: 0, mergedPullRequests: 0 };
-  }
+  return {
+    openPullRequests: openPullRequestsSince.length,
+    mergedPullRequests: mergedPullRequestsSince.length,
+  };
 }
 
