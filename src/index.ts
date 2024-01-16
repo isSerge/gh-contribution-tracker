@@ -35,7 +35,7 @@ export async function main() {
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
   try {
     const data = await fetchOrganizationRepos(graphqlClient, githubOrg);
-    const aggregated = aggregateData(data, oneWeekAgo);
+    const aggregated = await aggregateData(graphqlClient, githubOrg, data, oneWeekAgo);
 
     console.log(aggregated);
     // await fsp.writeFile('data.json', JSON.stringify(data, null, 2));
