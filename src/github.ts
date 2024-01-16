@@ -47,6 +47,7 @@ interface RepositoryDataResponse {
         number: number;
         state: string;
         closedAt: string;
+        updatedAt: string;
       }[];
     };
   };
@@ -141,6 +142,7 @@ async function fetchRepoIssues(client: typeof graphql, org: string, repoName: st
             number
             state
             closedAt
+            updatedAt
           }
         }
       }
