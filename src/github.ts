@@ -1,4 +1,5 @@
 import { graphql } from '@octokit/graphql';
+import { fetchRepoIssues } from "./issues";
 
 interface RepositoryNode {
   name: string;
@@ -27,29 +28,6 @@ interface OrganizationRepositories {
 interface OrganizationDataResponse {
   organization: {
     repositories: OrganizationRepositories;
-  };
-}
-
-interface RepositoryDataResponse {
-  repository: {
-    issues: {
-      totalCount: number;
-      nodes: {
-        title: string;
-        url: string;
-        comments: {
-          totalCount: number;
-        };
-        createdAt: string;
-        labels: {
-          totalCount: number;
-        };
-        number: number;
-        state: string;
-        closedAt: string;
-        updatedAt: string;
-      }[];
-    };
   };
 }
 
@@ -104,8 +82,8 @@ export async function aggregateData(client: typeof graphql, org: string, repos: 
 
     const issues = await fetchRepoIssues(client, org, repo.name, since);
 
-    const open = issues.nodes.filter(issue => issue.state === 'OPEN');
-    const closed = issues.nodes.filter(issue => issue.state === 'CLOSED');
+    const open = issues.filter(issue => issue.state === 'OPEN');
+    const closed = issues.filter(issue => issue.state === 'CLOSED');
 
     openIssues.push(...open);
     closedIssues.push(...closed);
@@ -121,35 +99,4 @@ export async function aggregateData(client: typeof graphql, org: string, repos: 
       closed: closedIssues.length,
     }
   };
-}
-
-async function fetchRepoIssues(client: typeof graphql, org: string, repoName: string, since: Date) {
-  const query = `
-    query ($org: String!, $repoName: String!, $since: DateTime!) {
-      repository(owner: $org, name: $repoName) {
-        issues(first: 100, states: OPEN, orderBy: {field: UPDATED_AT, direction: DESC}, filterBy: {since: $since}) {
-          totalCount
-          nodes {
-            title
-            url
-            comments {
-              totalCount
-            }
-            createdAt
-            labels {
-              totalCount
-            }
-            number
-            state
-            closedAt
-            updatedAt
-          }
-        }
-      }
-    }
-  `;
-
-  const result: RepositoryDataResponse = await client(query, { repoName, since: since.toISOString(), org });
-
-  return result.repository.issues;
 }
